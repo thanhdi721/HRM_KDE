@@ -1,23 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config();
 const cors = require('cors');
 const app = express();
-const PORT = 5000;
+const port = process.env.PORT || 5000;
+const db = require('./config/db');
+const routes = require('./routes');
+
 
 app.use(cors());
 app.use(bodyParser.json());
 
+db.connect();
 
-// Kết nối đến MongoDB
-mongoose.connect('mongodb://localhost:27017/HRM_KDE', { useNewUrlParser: true });
+routes(app);
 
-app.get('/', (req, res) => {
-    res.send('HELLO WORD!!');
-})
 
-// Định nghĩa các routes và controllers ở đây
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
 });
