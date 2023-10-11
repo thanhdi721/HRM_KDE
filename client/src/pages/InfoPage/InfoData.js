@@ -1,5 +1,8 @@
-const InfoData = [
+import logo1 from "./img/1-01.png";
+
+const infodata = [
     {
+        img: logo1,     
         msnv: 10674,
         name: 'Nguyễn Hữu Chí',
         gt: 'Nam',
@@ -11,4 +14,4 @@ const InfoData = [
     },
 ];
 
-export default InfoData;
+export default infodata;
