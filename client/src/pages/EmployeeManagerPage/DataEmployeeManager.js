@@ -1,6 +1,6 @@
 import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent";
 
-const DataOfOrderCreationHistory = () => {
+const DataEmployeeManager = () => {
   return (
     <div class="container mt-4">
       <div className="table-container" style={{ overflowX: "auto" }}>
@@ -8,28 +8,31 @@ const DataOfOrderCreationHistory = () => {
           <thead>
             <tr>
               <th>Ngày tạo</th>
+              <th>Họ & tên CNV</th>
+              <th>MSNV</th>
+              <th>Bộ phận</th>
               <th>Từ</th>
               <th>Đến</th>
               <th>Lý do</th>
-              <th>Trạng thái</th>
-              <th>Từ(thực tế)</th>
-              <th>Đến(thực tế)</th>
+              <th> Trạng thái CBQL</th>
+
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>12/2/2222 12:00</td>
+              <td>Phan Thanh Dĩ</td>
+              <td>2160280</td>
+              <td>Chủ tệck</td>
               <td>12/2/2222 12:00</td>
               <td>12/2/2222 12:00</td>
-              <td>Đi đẻ :v</td>
+              <td>Ngủ Nướng</td>
               <td>Chờ Khứa xác nhận</td>
-              <td>12/2/2222 12:00</td>
-              <td>12/2/2222 12:00</td>
               <td class="d-flex justify-content-between">
-                <ModalComponent>Xóa</ModalComponent>
+                <ModalComponent>Từ Chối</ModalComponent>
 
-                <button class="btn  btn-primary">Sửa </button>
+                <button class="btn  btn-primary">Duyệt </button>
               </td>
             </tr>
           </tbody>
@@ -38,4 +41,4 @@ const DataOfOrderCreationHistory = () => {
     </div>
   );
 };
-export default DataOfOrderCreationHistory;
+export default DataEmployeeManager;

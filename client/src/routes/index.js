@@ -9,6 +9,8 @@ import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
 import OrderCreationHistoryPage from "../pages/OrderCreationHistoryPage/OrderCreationHistoryPage";
+import EmployeeManagerPage from "../pages/EmployeeManagerPage/EmployeeManagerPage";
+import ManagementProtectionPage from "../pages/ManagementProtectionPage/ManagementProtectionPage";
 
 export const routes = [
   {
@@ -59,6 +61,16 @@ export const routes = [
   {
     path: "/order-creation-history",
     page: OrderCreationHistoryPage,
+    IsShowHeader: true,
+  },
+  {
+    path: "/employee-manager-page",
+    page: EmployeeManagerPage,
+    IsShowHeader: true,
+  },
+  {
+    path: "/management-protection-page",
+    page: ManagementProtectionPage,
     IsShowHeader: true,
   },
 ];
