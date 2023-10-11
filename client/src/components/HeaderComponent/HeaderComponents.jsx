@@ -22,6 +22,14 @@ const items = [
     key: "3",
     label: <a href="/order-creation-history">Lịch sử tạo đơn</a>,
   },
+  {
+    key: "4",
+    label: <a href="/employee-manager-page">Quản Lý nhân viên</a>,
+  },
+  {
+    key: "5",
+    label: <a href="/management-protection-page">Bảo vệ quản lý</a>,
+  },
 ];
 
 const HeaderComponents = () => {
