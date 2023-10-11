@@ -9,10 +9,7 @@ const items = [
   {
     key: "1",
     label: (
-      <a
-        rel="noopener noreferrer"
-        href="/infopage"
-      > 
+      <a rel="noopener noreferrer" href="/infopage">
         Thông tin cá nhân
       </a>
     ),
