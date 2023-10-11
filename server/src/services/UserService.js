@@ -91,4 +91,35 @@ const loginUser = async (userLogin) => {
         };
     }
 }
-module.exports = {createUser, loginUser}
+
+const updateUser = async (id, data) => {
+
+    try {
+        const user = await User.findOne({
+            _id: id,
+        });
+        if (!user) {
+            return {
+                status: 'error',
+                message: 'Người dùng không tồn tại',
+            };
+        }
+
+        const updateUser = await User.findByIdAndUpdate(id,data,{
+            new: true,
+        })
+        return {
+            status: 'success',
+            message: 'Cập nhật người dùng thành công',
+            data: updateUser,
+        };
+    } catch (error) {
+        console.error(error);
+        return {
+            status: 'error',
+            message: 'Đã có lỗi xảy ra khi cập nhật',
+            error: error.message,
+        };
+    }
+};
+module.exports = {createUser, loginUser,updateUser}
