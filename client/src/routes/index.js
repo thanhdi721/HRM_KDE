@@ -8,7 +8,7 @@ import SignUpPage from "../pages/SingUpPage/SingUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
-
+import OrderCreationHistoryPage from "../pages/OrderCreationHistoryPage/OrderCreationHistoryPage";
 
 export const routes = [
   {
@@ -55,6 +55,11 @@ export const routes = [
     path: "/infopage",
     page: InfoPage,
     IsShowHeader: true,
-  }
+  },
+  {
+    path: "/order-creation-history",
+    page: OrderCreationHistoryPage,
+    IsShowHeader: true,
+  },
 ];
 export default routes;
