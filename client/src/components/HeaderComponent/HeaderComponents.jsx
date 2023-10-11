@@ -16,27 +16,11 @@ const items = [
   },
   {
     key: "2",
-    label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.aliyun.com"
-      >
-        Tạo đơn ra cổng
-      </a>
-    ),
+    label: <a href="/homepage">Tạo đơn ra cổng</a>,
   },
   {
     key: "3",
-    label: (
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.luohanacademy.com"
-      >
-        Lịch sử tạo đơn
-      </a>
-    ),
+    label: <a href="/order-creation-history">Lịch sử tạo đơn</a>,
   },
 ];
 
