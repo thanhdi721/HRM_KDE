@@ -81,6 +81,7 @@ const DataOfOrderCreationHistory = () => {
   return (
     <div>
       <Table
+        scroll={{ x: true, y: 400 }}
         columns={columns}
         dataSource={data}
         size="middle"
