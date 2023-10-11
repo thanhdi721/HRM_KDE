@@ -1,3 +1,4 @@
+import { Row } from "antd";
 import styled from "styled-components";
 
 export const WrapperBody = styled.div`
@@ -7,7 +8,7 @@ export const WrapperBody = styled.div`
 
 export const WrapperContainer = styled.div`
   height: 1000px;
-  width: 1270px;
+  width: 100%;
   padding-top: 20px;
   margin: 0 auto;
   background-color: #fff;
@@ -16,4 +17,9 @@ export const WrapperContainerTitle = styled.div`
   text-align: center;
   font-size: 22px;
   font-weight: 700;
+`;
+export const WrapperContainerText = styled(Row)`
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 400;
 `;
