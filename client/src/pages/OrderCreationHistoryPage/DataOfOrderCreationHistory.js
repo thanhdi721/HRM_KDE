@@ -84,7 +84,7 @@ const DataOfOrderCreationHistory = () => {
         columns={columns}
         dataSource={data}
         size="middle"
-        style={{ width: "80%", margin: "auto" }}
+        style={{ width: "100%", margin: "auto" }}
       />
     </div>
   );
