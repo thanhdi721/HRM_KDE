@@ -8,7 +8,7 @@ import SignUpPage from "../pages/SingUpPage/SingUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
-import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 export const routes = [
   {
