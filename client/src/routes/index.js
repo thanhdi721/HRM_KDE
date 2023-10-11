@@ -7,7 +7,8 @@ import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SingUpPage/SingUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
-import Info from "../pages/InfoPage/Info";
+import InfoPage from "../pages/InfoPage/InfoPage";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const routes = [
   {
@@ -51,8 +52,8 @@ export const routes = [
     page: NotFoundPage,
   },
   {
-    path: "/info",
-    page: Info,
+    path: "/infopage",
+    page: InfoPage,
     IsShowHeader: true,
   }
 ];
