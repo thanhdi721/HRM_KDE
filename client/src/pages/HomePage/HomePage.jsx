@@ -1,19 +1,21 @@
 import React from "react";
-import { Col, DatePicker, Radio, Select, TimePicker } from "antd";
-import dayjs from "dayjs";
+import { Col, DatePicker, Radio, Select } from "antd";
+
 import {
   WrapperBody,
   WrapperContainer,
   WrapperContainerText,
   WrapperContainerTitle,
 } from "./style.js";
-
+import "./SetTime.js";
 import TextArea from "antd/es/input/TextArea.js";
+import UploadButton from "./UploadButton.js";
+import ButtonComponent from "../../components/ButtonComponent/ButtonComponent.jsx";
+import CustomTimePicker from "./SetTime.js";
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
 const HomePage = () => {
-  const format = "HH:mm";
   return (
     <>
       <WrapperBody>
@@ -36,32 +38,26 @@ const HomePage = () => {
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>Từ:</Col>
+
+            <Col span={8}>
+              <span>Thời gian: </span>
+              <CustomTimePicker />
+            </Col>
             <Col span={8}>
               <span>Ngày: </span>
               <DatePicker size={"small"} />
-            </Col>
-            <Col span={8}>
-              <span>Thời gian: </span>
-              <TimePicker
-                size={"small"}
-                defaultValue={dayjs("00:00", format)}
-                format={format}
-              />
             </Col>
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>Đến:</Col>
+
+            <Col span={8}>
+              <span>Thời gian: </span>
+              <CustomTimePicker />
+            </Col>
             <Col span={8}>
               <span>Ngày: </span>
               <DatePicker size={"small"} />
-            </Col>
-            <Col span={8}>
-              <span>Thời gian: </span>
-              <TimePicker
-                size={"small"}
-                defaultValue={dayjs("00:00", format)}
-                format={format}
-              />
             </Col>
           </WrapperContainerText>
           <WrapperContainerText>
@@ -114,13 +110,52 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}>Hình ảnh tài sản:</Col>
             <Col span={8}>
-              <Radio.Group name="radiogroup" defaultValue={1}>
-                <Radio value={1}>Có</Radio>
-                <Radio value={2}>Không</Radio>
-              </Radio.Group>
+              <UploadButton />
+            </Col>
+            <Col span={8}></Col>
+          </WrapperContainerText>
+          <WrapperContainerText>
+            <Col span={8}>CBQL duyệt:</Col>
+            <Col span={8}>
+              <Select
+                defaultValue="Người duyệt"
+                style={{
+                  width: 150,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: "Cu Thống",
+                    label: "Cu Thống",
+                  },
+                  {
+                    value: "Cu Trực",
+                    label: "Cu Trực",
+                  },
+
+                  {
+                    value: "tự trốn",
+                    label: "tự trốn",
+                    disabled: true,
+                  },
+                ]}
+              />
+            </Col>
+            <Col span={8}></Col>
+          </WrapperContainerText>
+          <WrapperContainerText>
+            <Col span={8}></Col>
+            <Col span={8}>
+              <ButtonComponent
+                textbutton={"hủy"}
+                style={{ width: "80px", background: "red" }}
+              />
             </Col>
             <Col span={8}>
-              <TextArea rows={2} placeholder="Nhập lý do" />
+              <ButtonComponent
+                textbutton={"gửi"}
+                style={{ width: "80px", background: "green" }}
+              />
             </Col>
           </WrapperContainerText>
         </WrapperContainer>
