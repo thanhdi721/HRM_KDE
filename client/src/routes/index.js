@@ -6,6 +6,9 @@ import TypeProductPage from "../pages/TypeProductPage/TypeProductPage";
 import SignInPage from "../pages/SignInPage/SignInPage";
 import SignUpPage from "../pages/SingUpPage/SingUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
+
+import Info from "../pages/InfoPage/Info";
+
 export const routes = [
   {
     path: "/",
@@ -47,5 +50,10 @@ export const routes = [
     path: "/*",
     page: NotFoundPage,
   },
+  {
+    path: "/info",
+    page: Info,
+    IsShowHeader: true,
+  }
 ];
 export default routes;
