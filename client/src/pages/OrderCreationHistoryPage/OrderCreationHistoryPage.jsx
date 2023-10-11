@@ -7,7 +7,7 @@ const OrderCreationHistoryPage = () => {
     <div style={{ paddingTop: "20px" }}>
       <WrapperContainerTitle>Lịch sử tạo đơn</WrapperContainerTitle>
 
-      <DataOfOrderCreationHistory />
+      <DataOfOrderCreationHistory style={{ width: "100%" }} />
     </div>
   );
 };
