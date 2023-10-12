@@ -3,8 +3,8 @@ import OrderPage from "../pages/OrderPage/OrderPage";
 import ProductsPage from "../pages/ProductsPage/ProductsPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
 import TypeProductPage from "../pages/TypeProductPage/TypeProductPage";
-import SignInPage from "../pages/SignInPage/SignInPage";
-import SignUpPage from "../pages/SingUpPage/SingUpPage";
+import LogInPage from "../pages/LogInPage/LogInPage";
+import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
@@ -15,7 +15,7 @@ import ManagementProtectionPage from "../pages/ManagementProtectionPage/Manageme
 export const routes = [
   {
     path: "/",
-    page: SignInPage,
+    page: LogInPage,
     IsShowHeader: false,
   },
   {
@@ -40,8 +40,8 @@ export const routes = [
   },
 
   {
-    path: "/sign-up",
-    page: SignUpPage,
+    path: "/register",
+    page: RegisterPage,
     IsShowHeader: false,
   },
   {
