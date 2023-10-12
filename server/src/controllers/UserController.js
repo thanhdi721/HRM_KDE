@@ -1,4 +1,5 @@
 const UserService = require('../services/UserService');
+const JwtService = require('../services/JWtService');
 
 const createUser = async (req, res) => {
     try{
@@ -77,4 +78,70 @@ const updateUser = async (req, res) => {
         });
     }
 }
-module.exports = { createUser, loginUser,updateUser };
+
+const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.id
+        if(!userId){
+            return res.status(200).json({
+                status: 'error',
+                message: 'Vui lòng nhập đầy đủ thông tin'
+            });
+        }
+        const response = await UserService.deleteUser(userId)
+        return res.status(200).json(response);
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        });
+    }
+}
+
+const getAllUser = async (req, res) => {
+    try {
+        const response = await UserService.getAllUser()
+        return res.status(200).json(response);
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        });
+    }
+}
+
+const getDetailsUser = async (req, res) => {
+    try {
+        const userId = req.params.id
+        if(!userId){
+            return res.status(200).json({
+                status: 'error',
+                message: 'Vui lòng nhập đầy đủ thông tin'
+            });
+        }
+        const response = await UserService.getDetailsUser(userId)
+        return res.status(200).json(response);
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        });
+    }
+}
+
+const refreshToken = async (req, res) => {
+    try {
+        const token = req.headers.token.split(' ')[1];
+        if(!token){
+            return res.status(200).json({
+                status: 'error',
+                message: 'Yêu cầu có token'
+            });
+        }
+        const response = await JwtService.RefreshTokenJWtService(token)
+        return res.status(200).json(response);
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        });
+    }
+}
+
+module.exports = { createUser, loginUser,updateUser,deleteUser,getAllUser,getDetailsUser,refreshToken };
