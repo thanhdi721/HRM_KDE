@@ -90,7 +90,7 @@ const loginUser = async (userLogin) => {
             error: error.message,
         };
     }
-}
+};
 
 const updateUser = async (id, data) => {
 
@@ -122,4 +122,71 @@ const updateUser = async (id, data) => {
         };
     }
 };
-module.exports = {createUser, loginUser,updateUser}
+
+const deleteUser = async (id) => {
+
+    try {
+        const user = await User.findOne({
+            _id: id,
+        });
+        if (!user) {
+            return {
+                status: 'error',
+                message: 'Người dùng không tồn tại',
+            };
+        }
+
+        await User.findByIdAndDelete(id)
+        return {
+            status:'success',
+            message: 'Xóa người dùng thành công',
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            error: error.message,
+        };
+    }
+};
+
+const getAllUser = async (id) => {
+
+    try {
+        const allUser = await User.find()
+        return {
+            status:'success',
+            data: allUser,
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            error: error.message,
+        };
+    }
+};
+
+const getDetailsUser = async (id) => {
+
+    try {
+        const user = await User.findOne({
+            _id: id,
+        });
+        if (!user) {
+            return {
+                status: 'error',
+                message: 'Người dùng không tồn tại',
+            };
+        }
+
+        return {
+            status:'success',
+            data: user,
+        };
+    } catch (error) {
+        return {
+            status: 'error',
+            error: error.message,
+        };
+    }
+};
+module.exports = {createUser, loginUser,updateUser,deleteUser,getAllUser,getDetailsUser}
