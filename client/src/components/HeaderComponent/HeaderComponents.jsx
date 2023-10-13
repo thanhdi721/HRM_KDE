@@ -41,6 +41,17 @@ const items = [
       </a>
     ),
   },
+  {
+    key: "4",
+    label: (
+      <a
+        rel="noopener noreferrer"
+        href="/hrpage"
+      >
+        Tính lương nhân viên
+      </a>
+    ),
+  },
 ];
 
 const HeaderComponents = () => {

@@ -8,6 +8,7 @@ import SignUpPage from "../pages/SingUpPage/SingUpPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
+import HRPage from "../pages/HRPage/HRPage";
 
 
 export const routes = [
@@ -54,6 +55,11 @@ export const routes = [
   {
     path: "/infopage",
     page: InfoPage,
+    IsShowHeader: true,
+  },
+  {
+    path: "/hrpage",
+    page: HRPage,
     IsShowHeader: true,
   }
 ];
