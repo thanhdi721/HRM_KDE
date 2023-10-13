@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, DatePicker, Radio, Select } from "antd";
-
+import { useState, useEffect } from "react";
 import {
   WrapperBody,
   WrapperContainer,
@@ -12,6 +12,7 @@ import TextArea from "antd/es/input/TextArea.js";
 import UploadButton from "./UploadButton.js";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent.jsx";
 import CustomTimePicker from "./SetTime.js";
+import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent.jsx";
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
@@ -145,16 +146,16 @@ const HomePage = () => {
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}></Col>
-            <Col span={8}>
-              <ButtonComponent
-                textbutton={"hủy"}
-                style={{ width: "80px", background: "red" }}
-              />
-            </Col>
-            <Col span={8}>
+            <Col span={8}></Col>
+            <Col span={8} style={{ display: "flex" }}>
+              <ModalComponent>
+                <ButtonComponent textbutton={"hủy"} />
+              </ModalComponent>
+
               <ButtonComponent
                 textbutton={"gửi"}
-                style={{ width: "80px", background: "green" }}
+                class="btn  btn-primary "
+                style={{ marginLeft: "20px" }}
               />
             </Col>
           </WrapperContainerText>
