@@ -1,8 +1,8 @@
 const DataManagementProtectionPage = () => {
   return (
-    <div class="container mt-4">
+    <div className="container mt-4">
       <div className="table-container" style={{ overflowX: "auto" }}>
-        <table class="table table-bordered">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th>Ngày tạo</th>
@@ -30,8 +30,8 @@ const DataManagementProtectionPage = () => {
               <td>Chờ Khứa xác nhận</td>
               <td>Bảo vệ điền ngày, giờ, phút thực tế ra cổng</td>
               <td>Bảo vệ điền ngày, giờ, phút thực tế ra cổng</td>
-              <td class="d-flex justify-content-between">
-                <button class="btn  btn-primary">Duyệt </button>
+              <td className="d-flex justify-content-between">
+                <button className="btn  btn-primary">Duyệt </button>
               </td>
             </tr>
           </tbody>

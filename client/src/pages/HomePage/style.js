@@ -8,10 +8,12 @@ export const WrapperBody = styled.div`
 
 export const WrapperContainer = styled.div`
   height: 1000px;
-  width: 100%;
+  width: 50%;
   padding-top: 20px;
   margin: 0 auto;
-  background-color: #fff;
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 export const WrapperContainerTitle = styled.div`
   text-align: center;

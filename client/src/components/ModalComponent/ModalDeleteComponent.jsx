@@ -24,7 +24,7 @@ const ModalComponent = () => {
   };
   return (
     <div>
-      <button class="btn btn-danger" onClick={showModal}>
+      <button className="btn btn-danger" onClick={showModal}>
         Xóa
       </button>
       <Modal

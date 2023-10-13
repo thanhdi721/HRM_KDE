@@ -11,8 +11,9 @@ import "./SetTime.js";
 import TextArea from "antd/es/input/TextArea.js";
 import UploadButton from "./UploadButton.js";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent.jsx";
-import CustomTimePicker from "./SetTime.js";
+
 import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent.jsx";
+import SetTime from "./SetTime.js";
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
@@ -42,7 +43,7 @@ const HomePage = () => {
 
             <Col span={8}>
               <span>Thời gian: </span>
-              <CustomTimePicker />
+              <SetTime />
             </Col>
             <Col span={8}>
               <span>Ngày: </span>
@@ -54,7 +55,7 @@ const HomePage = () => {
 
             <Col span={8}>
               <span>Thời gian: </span>
-              <CustomTimePicker />
+              <SetTime />
             </Col>
             <Col span={8}>
               <span>Ngày: </span>
@@ -154,7 +155,7 @@ const HomePage = () => {
 
               <ButtonComponent
                 textbutton={"gửi"}
-                class="btn  btn-primary "
+                className="btn btn-success"
                 style={{ marginLeft: "20px" }}
               />
             </Col>
