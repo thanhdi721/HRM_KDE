@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, DatePicker, Radio, Select } from "antd";
-import { useState, useEffect } from "react";
+
 import {
   WrapperBody,
   WrapperContainer,

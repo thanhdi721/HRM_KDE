@@ -14,7 +14,7 @@ import InputForm from "../../components/InputForm/InputFrom";
 const SignInPage = () => {
   const navigate = useNavigate();
   const handleNavigateRegister = () => {
-    navigate("/sign-up");
+    navigate("/register");
   };
   const handleNavigateHomePage = () => {
     navigate("/HomePage");
