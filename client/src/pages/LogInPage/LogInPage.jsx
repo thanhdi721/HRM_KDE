@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import axios from "axios";
 import {
   WrapperContainerLeft,
   WrapperContainerRight,
@@ -9,16 +10,60 @@ import {
 import { useState } from "react";
 import imageLogo from "../../assets/images/slider1.png";
 import { Image } from "antd";
-import InputForm from "../../components/InputForm/InputFrom";
+// import InputForm from "../../components/InputForm/InputFrom";
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const handleNavigateRegister = () => {
-    navigate("/register");
-  };
-  const handleNavigateHomePage = () => {
-    navigate("/HomePage");
-  };
+  const [msnv, setMsnv] = useState('');
+  const [password, setPassword] = useState('');
+  const [msnvNotification, setMsnvNotification] = useState(null);
+  const [passwordNotification, setPasswordNotification] = useState(null);
+  // const handleNavigateRegister = () => {
+  //   navigate("/register");
+  // };
+  const handleLogin = async() => {
+    try { 
+      const reponse = await axios.post(
+        'http://localhost:5000/user/login',
+        {
+          msnv: msnv,
+          password: password
+        }
+      )
+      setMsnvNotification(null)
+      setPasswordNotification(null)
+      // console.log('Phản hồi API:', reponse.data);
+
+      if(reponse.data.status === 'error'){
+        if(reponse.data.message.includes('Mã số nhân viên')){
+          setMsnvNotification({
+            type: 'error',
+            message: reponse.data.message,
+          })
+        } else if (reponse.data.message.includes('Mật khẩu')){
+          setPasswordNotification({
+            type: 'error',
+            message: reponse.data.message,
+          })
+        }
+      } else {
+        navigate('/homePage');
+        localStorage.setItem('access_token',reponse.data?.access_token)
+      }
+  }catch(error){
+    if (error.response && error.response.status === 400) {
+      setMsnvNotification({
+        type: "error",
+        message: error.response.data.message,
+      });
+    } else {
+      setMsnvNotification({
+        type: "error",
+        message: "Đã có lỗi xảy ra khi đăng nhập",
+      });
+    }   
+  }
+}
   const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div
@@ -42,10 +87,15 @@ const SignInPage = () => {
         <WrapperContainerLeft>
           <h1>Xin chào</h1>
           <p>Đăng nhập vào tạo tài khoản</p>
-          <InputForm
+          <input
+            value = {msnv}
+            onChange = {(e) => setMsnv(e.target.value)}
             style={{ marginBottom: "10px" }}
             placeholder="abc@gmail.com"
           />
+          <div className={`notification ${msnvNotification && msnvNotification.type === "error" ? "error" : ""}`}>
+            {msnvNotification && msnvNotification.message}
+          </div>
           <div style={{ position: "relative" }}>
             <span
               onClick={() => setIsShowPassword(!isShowPassword)}
@@ -56,10 +106,15 @@ const SignInPage = () => {
                 right: "8px",
               }}
             ></span>
-            <InputForm
+            <input
+              value = {password}
+              onChange = {(e) => setPassword(e.target.value)}
               placeholder="password"
               type={isShowPassword ? "text" : "password"}
             />
+            <div className={`notification ${passwordNotification && passwordNotification.type === "error" ? "error" : ""}`}>
+              {passwordNotification && passwordNotification.message}
+            </div>
           </div>
 
           <ButtonComponent
@@ -78,16 +133,16 @@ const SignInPage = () => {
               fontSize: "15px",
               fontWeight: "700",
             }}
-            onClick={handleNavigateHomePage}
+            onClick={handleLogin}
           ></ButtonComponent>
 
           <p>
             <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
           </p>
-          <p onClick={handleNavigateRegister}>
+          {/* <p onClick={handleNavigateRegister}>
             Chưa có tài khoản?{" "}
             <WrapperTextLight> Tạo tài khoản</WrapperTextLight>
-          </p>
+          </p> */}
         </WrapperContainerLeft>
         <WrapperContainerRight>
           <Image
