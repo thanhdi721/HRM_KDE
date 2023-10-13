@@ -8,9 +8,14 @@ import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
 
 import InfoPage from "../pages/InfoPage/InfoPage";
+
+import HRPage from "../pages/HRPage/HRPage";
+
+
 import OrderCreationHistoryPage from "../pages/OrderCreationHistoryPage/OrderCreationHistoryPage";
 import EmployeeManagerPage from "../pages/EmployeeManagerPage/EmployeeManagerPage";
 import ManagementProtectionPage from "../pages/ManagementProtectionPage/ManagementProtectionPage";
+
 
 export const routes = [
   {
@@ -59,6 +64,12 @@ export const routes = [
     IsShowHeader: true,
   },
   {
+
+    path: "/hrpage",
+    page: HRPage,
+    IsShowHeader: true,
+  },
+  {
     path: "/order-creation-history",
     page: OrderCreationHistoryPage,
     IsShowHeader: true,
@@ -73,5 +84,7 @@ export const routes = [
     page: ManagementProtectionPage,
     IsShowHeader: true,
   },
+
+  
 ];
 export default routes;

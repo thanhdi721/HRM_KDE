@@ -30,6 +30,17 @@ const items = [
     key: "5",
     label: <a href="/management-protection-page">Bảo vệ quản lý</a>,
   },
+  {
+    key: "4",
+    label: (
+      <a
+        rel="noopener noreferrer"
+        href="/hrpage"
+      >
+        Tính lương nhân viên
+      </a>
+    ),
+  },
 ];
 
 const HeaderComponents = () => {
