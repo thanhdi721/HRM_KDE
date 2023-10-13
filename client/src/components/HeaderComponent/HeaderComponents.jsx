@@ -1,6 +1,6 @@
 import { Col, Dropdown, Image } from "antd";
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 import { WrapperHeader, WrapperIconHeader } from "./style";
 import imageLogo from "../../assets/images/logo.png";
 import { UnorderedListOutlined } from "@ant-design/icons";
@@ -44,6 +44,10 @@ const items = [
 ];
 
 const HeaderComponents = () => {
+  const navigate = useNavigate();
+  const handleNavigateLogo = () => {
+    navigate("/homepage");
+  };
   return (
     <div
       style={{
@@ -57,6 +61,7 @@ const HeaderComponents = () => {
       <WrapperHeader>
         <Col span={4}>
           <Image
+            onClick={handleNavigateLogo}
             src={imageLogo}
             alt=""
             style={{ width: "70px", height: "70px" }}
