@@ -7,7 +7,7 @@ const Info = ({infos}) => {
     return (
         <div className="container">
             <div className="row">
-                <div className="col">
+                <div className="col img">
                     <img src={infos.img} alt={infos.name} className="img-thumbnail"/>
                 </div>
                 <div className="col-sm-8 if">
