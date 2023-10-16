@@ -1,66 +1,38 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
-import axios from "axios";
 import {
   WrapperContainerLeft,
   WrapperContainerRight,
   WrapperTextLight,
 } from "./style";
+import Loading from "../../components/LoadingComponent/Loading";
 import { useState } from "react";
 import imageLogo from "../../assets/images/logo.png";
 import { Image } from "antd";
-// import InputForm from "../../components/InputForm/InputFrom";
+import * as UserService from '../../services/UserService';
+import { useMutationHooks } from "../../hooks/useMutationHooks";
+// import InputForm from "../../components/InputForm/InputForm";
+
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const [msnv, setMsnv] = useState("");
   const [password, setPassword] = useState("");
-  const [msnvNotification, setMsnvNotification] = useState(null);
-  const [passwordNotification, setPasswordNotification] = useState(null);
-  // const handleNavigateRegister = () => {
-  //   navigate("/register");
-  // };
-  const handleLogin = async () => {
-    try {
-      const reponse = await axios.post("http://localhost:5000/user/login", {
-        msnv: msnv,
-        password: password,
-      });
-      setMsnvNotification(null);
-      setPasswordNotification(null);
-      // console.log('Phản hồi API:', reponse.data);
 
-      if (reponse.data.status === "error") {
-        if (reponse.data.message.includes("Mã số nhân viên")) {
-          setMsnvNotification({
-            type: "error",
-            message: reponse.data.message,
-          });
-        } else if (reponse.data.message.includes("Mật khẩu")) {
-          setPasswordNotification({
-            type: "error",
-            message: reponse.data.message,
-          });
-        }
-      } else {
-        navigate("/homePage");
-        localStorage.setItem("access_token", reponse.data?.access_token);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 400) {
-        setMsnvNotification({
-          type: "error",
-          message: error.response.data.message,
-        });
-      } else {
-        setMsnvNotification({
-          type: "error",
-          message: "Đã có lỗi xảy ra khi đăng nhập",
-        });
-      }
-    }
+  const mutation = useMutationHooks(
+    data => UserService.loginUser(data)
+  );
+  const { data, isLoading } = mutation
+  console.log('mutation', mutation);
+
+  const handleLogin = async () => {
+    mutation.mutate({
+      msnv,
+      password
+    })
   };
+  
   const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div
@@ -84,7 +56,10 @@ const SignInPage = () => {
         <WrapperContainerLeft>
           <h1>Xin chào</h1>
           <p>Đăng nhập vào tạo tài khoản</p>
+          <div>
           <input
+            name={msnv}
+            type="text"
             value={msnv}
             onChange={(e) => setMsnv(e.target.value)}
             style={{
@@ -96,14 +71,7 @@ const SignInPage = () => {
             }}
             placeholder="abc@gmail.com"
           />
-          <div
-            className={`notification ${
-              msnvNotification && msnvNotification.type === "error"
-                ? "error"
-                : ""
-            }`}
-          >
-            {msnvNotification && msnvNotification.message}
+          {data?.status === 'error' && <span style={{color: 'red'}}>{data?.message}</span>}
           </div>
           <div style={{ position: "relative" }}>
             <span
@@ -116,6 +84,7 @@ const SignInPage = () => {
               }}
             ></span>
             <input
+              name={password}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="password"
@@ -127,36 +96,27 @@ const SignInPage = () => {
                 borderRadius: "4px",
               }}
             />
-            <div
-              className={`notification ${
-                passwordNotification && passwordNotification.type === "error"
-                  ? "error"
-                  : ""
-              }`}
-            >
-              {passwordNotification && passwordNotification.message}
-            </div>
           </div>
-
-          <ButtonComponent
-            size={40}
-            styleButton={{
-              background: "rgb(255, 57, 69)",
-              height: "48px",
-              width: "100%",
-              border: "none",
-              borderRadius: "4px",
-              margin: "26px 0 10px",
-            }}
-            textbutton={"Đăng nhập"}
-            styleTextButton={{
-              color: "#fff",
-              fontSize: "15px",
-              fontWeight: "700",
-            }}
-            onClick={handleLogin}
-          ></ButtonComponent>
-
+          <Loading isLoading={isLoading}>
+            <ButtonComponent
+              size={40}
+              styleButton={{
+                background: "rgb(255, 57, 69)",
+                height: "48px",
+                width: "100%",
+                border: "none",
+                borderRadius: "4px",
+                margin: "26px 0 10px",
+              }}
+              textbutton={"Đăng nhập"}
+              styleTextButton={{
+                color: "#fff",
+                fontSize: "15px",
+                fontWeight: "700",
+              }}
+              onClick={handleLogin}
+            ></ButtonComponent>
+          </Loading>
           <p>
             <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
           </p>

@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import imageLogo from "../../assets/images/slider1.png";
 import { Image } from "antd";
-import InputForm from "../../components/InputForm/InputFrom";
+import InputForm from "../../components/InputForm/InputForm";
 const SignUpPage = () => {
   const navigate = useNavigate();
   const handleNavigateLogin = () => {
