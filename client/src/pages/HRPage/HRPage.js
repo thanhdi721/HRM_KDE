@@ -4,11 +4,12 @@ import HRData from "./HRData";
 
 class HRPage extends Component {
     render() {
+        
         return (
             <div className="/">
-                <div className="/">
+                <div className="container mt-4">
                     <ul>
-                        {HRData.map((HRs) => (
+                        {HRData.map(HRs => (
                             <HR key={HRs.msvn} HRs={HRs}/>
                         ))}
                     </ul>

@@ -3,8 +3,9 @@ import React from 'react';
 const HR = ({HRs}) => {
 
     return (
-        <div>
-            <table border={0} cellspacing={12} cellPadding={7}>
+        <div className="table-container" style={{ overflowX: "auto" }}>
+            <table className="table table-bordered table-striped">
+                <thead>
                 <tr>
                     <th>MSNV</th>
                     <th>HỌ TÊN</th>
@@ -17,6 +18,8 @@ const HR = ({HRs}) => {
                     <th>ĐẾN GIỜ - GHI NHẬN CỦA BẢO VỆ</th>
                     <th>TỔNG SỐ GIỜ NGHỈ RA CỔNG</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td>{HRs.msnv}</td>
                     <td>{HRs.name}</td>
@@ -29,6 +32,7 @@ const HR = ({HRs}) => {
                     <td>{HRs.denbaove}</td>
                     <td>{HRs.tongracong}</td>
                 </tr>
+                </tbody>
             </table>
         </div>
         

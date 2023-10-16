@@ -1,0 +1,18 @@
+
+.column {
+    float: left;
+    width: 40%;
+}
+.img-c{
+    text-align: center;
+}
+.img-c img {
+    max-width: 300px;
+    height: auto;
+}
+@media (max-width: 763px){
+    .img-c img {
+        max-width: 160px;
+        height: auto;
+    }
+}

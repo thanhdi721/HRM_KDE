@@ -1,29 +1,48 @@
-import React from 'react';
-import './css/InfoPage.css';
+import logo1 from "./img/1-01.png";
+import "./Info.css";
 
-
-const Info = ({infos}) => {
-
+const Info = () => {
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col img">
-                    <img src={infos.img} alt={infos.name} className="img-thumbnail"/>
-                </div>
-                <div className="col-sm-8 if">
-                    <p>Họ và tên: {infos.name}</p>
-                    <p>MSNV: {infos.msnv}</p>
-                    <p>Giới tính: {infos.gt}</p>
-                    <p>Chức vụ: {infos.cv}</p>
-                    <p>Bộ phận: {infos.bp}</p>
-                    <p>Phòng ban: {infos.pb}</p>
-                    <p>CBQL trực tiếp: {infos.cbqltt}</p>
-                    <p>CBQL cấp trên: {infos.cbqlct}</p>
-                </div>
-            </div>
+      <div className="container mt-4">
+        <div className="column img-c">
+            <img src={logo1} alt="logo1" />
         </div>
-        
+        <div className="column table-container" style={{ overflowX: "auto" }}>
+            <table className="table" >
+                <tbody>
+                    <tr>
+                        <td>MSNV:</td>
+                        <td>10674</td>
+                    </tr>
+                    <tr>
+                        <td>Họ tên:</td>
+                        <td>Nguyễn Hữu Chí</td>
+                    </tr>
+                    <tr>
+                        <td>Giới tính:</td>
+                        <td>Nam</td>
+                    </tr>
+                    <tr>
+                        <td>Bộ phận:</td>
+                        <td>Tiền lương</td>
+                    </tr>
+                    <tr>
+                        <td>Phòng ban:</td>
+                        <td>Nhân sự</td>
+                    </tr>
+                    <tr>
+                        <td>CBQL trực tiếp:</td>
+                        <td>TP. Nguyễn Thị Tuệ Tâm</td>
+                    </tr>
+                    <tr>
+                        <td>CBQL cấp trên:</td>
+                        <td>GĐ. Tăng Thị Vân</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     );
-}
-
-export default Info;
+  };
+  export default Info;
+  

@@ -1,25 +1,17 @@
-import React, {Component} from "react";
+import React  from "react";
 import Info from "./Info";
-import infodata from "./InfoData";
-import './css/InfoPage.css';
 
-class InfoPage extends Component {
-    render() {
+const InfoPage = () => {
         return (
-            <div className="profile">
-                <div className="info">
+            <div className="container mt-4">
+                <div className="/">
                     <h2>THÔNG TIN NHÂN VIÊN</h2>
                 </div>
-                <div className="data">
-                    <ul>
-                        {infodata.map((infos) => (
-                            <Info key={infos.msvn} infos={infos}/>
-                        ))}
-                    </ul>
+                <div className="/">
+                    <Info />
                 </div>
             </div>
         );
     }
-}
 
 export default InfoPage;
