@@ -1,19 +1,20 @@
 import { Col, Dropdown, Image } from "antd";
 import React from "react";
-import { useAuth } from "../../config/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { WrapperHeader, WrapperIconHeader } from "./style";
 import imageLogo from "../../assets/images/logo.png";
 import { UnorderedListOutlined } from "@ant-design/icons";
+import { useSelector } from "react-redux";
 
 
 
 const HeaderComponents = () => {
-  const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const user = useSelector((state) => state.user)
+  console.log('user', user);
 
   const handleLogout = () => {
-    logout();
+    // logout();
     navigate("/");
   };
 

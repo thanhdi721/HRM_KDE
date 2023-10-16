@@ -1,27 +1,14 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import logo1 from "./img/1-01.png";
 import "./Info.css";
+import { useSelector } from "react-redux";
 
 const Info = () => {
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await fetch("http://localhost/user/get-details/:id");
-        const data = await response.json();
-        setUserInfo(data); // Cập nhật state với dữ liệu người dùng từ API
-      } catch (error) {
-        console.error("Lỗi khi lấy dữ liệu người dùng:", error);
-      }
-    };
-
-    fetchUserInfo(); // Gọi hàm fetchUserInfo khi component được tạo ra
-  }, []); // Tham số thứ hai là một mảng rỗng để chỉ chạy useEffect một lần khi component được tạo
+  const user = useSelector((state) => state.user)
 
   return (
     <div className="container mt-4">
-      {userInfo ? (
+      {user ? (
         <>
           <div className="column img-c">
             <img src={logo1} alt="logo1" />
@@ -31,23 +18,23 @@ const Info = () => {
               <tbody>
                 <tr>
                   <td>MSNV:</td>
-                  <td>{userInfo.msnv}</td>
+                  <td>{user.msnv}</td>
                 </tr>
                 <tr>
                   <td>Họ tên:</td>
-                  <td>{userInfo.fullName}</td>
+                  <td>{user.fullName}</td>
                 </tr>
                 <tr>
                   <td>Giới tính:</td>
-                  <td>{userInfo.gender}</td>
+                  <td>{user.gender}</td>
                 </tr>
                 <tr>
                     <td>Bộ phận:</td>
-                    <td>{userInfo.position}</td>
+                    <td>{user.position}</td>
                 </tr>
                 <tr>
                     <td>Phòng ban:</td>
-                    <td>{userInfo.office}</td>
+                    <td>{user.office}</td>
                 </tr>
                 <tr>
                     <td>CBQL trực tiếp:</td>
