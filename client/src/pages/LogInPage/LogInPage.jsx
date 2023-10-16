@@ -8,62 +8,59 @@ import {
   WrapperTextLight,
 } from "./style";
 import { useState } from "react";
-import imageLogo from "../../assets/images/slider1.png";
+import imageLogo from "../../assets/images/logo.png";
 import { Image } from "antd";
 // import InputForm from "../../components/InputForm/InputFrom";
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const [msnv, setMsnv] = useState('');
-  const [password, setPassword] = useState('');
+  const [msnv, setMsnv] = useState("");
+  const [password, setPassword] = useState("");
   const [msnvNotification, setMsnvNotification] = useState(null);
   const [passwordNotification, setPasswordNotification] = useState(null);
   // const handleNavigateRegister = () => {
   //   navigate("/register");
   // };
-  const handleLogin = async() => {
-    try { 
-      const reponse = await axios.post(
-        'http://localhost:5000/user/login',
-        {
-          msnv: msnv,
-          password: password
-        }
-      )
-      setMsnvNotification(null)
-      setPasswordNotification(null)
+  const handleLogin = async () => {
+    try {
+      const reponse = await axios.post("http://localhost:5000/user/login", {
+        msnv: msnv,
+        password: password,
+      });
+      setMsnvNotification(null);
+      setPasswordNotification(null);
       // console.log('Phản hồi API:', reponse.data);
 
-      if(reponse.data.status === 'error'){
-        if(reponse.data.message.includes('Mã số nhân viên')){
+      if (reponse.data.status === "error") {
+        if (reponse.data.message.includes("Mã số nhân viên")) {
           setMsnvNotification({
-            type: 'error',
+            type: "error",
             message: reponse.data.message,
-          })
-        } else if (reponse.data.message.includes('Mật khẩu')){
+          });
+        } else if (reponse.data.message.includes("Mật khẩu")) {
           setPasswordNotification({
-            type: 'error',
+            type: "error",
             message: reponse.data.message,
-          })
+          });
         }
       } else {
-        navigate('/homePage');
-        localStorage.setItem('access_token',reponse.data?.access_token)
+        navigate("/homePage");
+        localStorage.setItem("access_token", reponse.data?.access_token);
       }
-  }catch(error){
-    if (error.response && error.response.status === 400) {
-      setMsnvNotification({
-        type: "error",
-        message: error.response.data.message,
-      });
-    } else {
-      setMsnvNotification({
-        type: "error",
-        message: "Đã có lỗi xảy ra khi đăng nhập",
-      });
-    }   
-  }
-}
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setMsnvNotification({
+          type: "error",
+          message: error.response.data.message,
+        });
+      } else {
+        setMsnvNotification({
+          type: "error",
+          message: "Đã có lỗi xảy ra khi đăng nhập",
+        });
+      }
+    }
+  };
   const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div
@@ -88,12 +85,24 @@ const SignInPage = () => {
           <h1>Xin chào</h1>
           <p>Đăng nhập vào tạo tài khoản</p>
           <input
-            value = {msnv}
-            onChange = {(e) => setMsnv(e.target.value)}
-            style={{ marginBottom: "10px" }}
+            value={msnv}
+            onChange={(e) => setMsnv(e.target.value)}
+            style={{
+              border: "none",
+              width: "100%",
+              height: "33px",
+              borderRadius: "4px",
+              marginBottom: "10px",
+            }}
             placeholder="abc@gmail.com"
           />
-          <div className={`notification ${msnvNotification && msnvNotification.type === "error" ? "error" : ""}`}>
+          <div
+            className={`notification ${
+              msnvNotification && msnvNotification.type === "error"
+                ? "error"
+                : ""
+            }`}
+          >
             {msnvNotification && msnvNotification.message}
           </div>
           <div style={{ position: "relative" }}>
@@ -107,12 +116,24 @@ const SignInPage = () => {
               }}
             ></span>
             <input
-              value = {password}
-              onChange = {(e) => setPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="password"
               type={isShowPassword ? "text" : "password"}
+              style={{
+                border: "none",
+                width: "100%",
+                height: "33px",
+                borderRadius: "4px",
+              }}
             />
-            <div className={`notification ${passwordNotification && passwordNotification.type === "error" ? "error" : ""}`}>
+            <div
+              className={`notification ${
+                passwordNotification && passwordNotification.type === "error"
+                  ? "error"
+                  : ""
+              }`}
+            >
               {passwordNotification && passwordNotification.message}
             </div>
           </div>
@@ -139,10 +160,6 @@ const SignInPage = () => {
           <p>
             <WrapperTextLight>Quên mật khẩu?</WrapperTextLight>
           </p>
-          {/* <p onClick={handleNavigateRegister}>
-            Chưa có tài khoản?{" "}
-            <WrapperTextLight> Tạo tài khoản</WrapperTextLight>
-          </p> */}
         </WrapperContainerLeft>
         <WrapperContainerRight>
           <Image
@@ -152,7 +169,7 @@ const SignInPage = () => {
             height="203px"
             width="203px"
           />
-          <h4>Mua sắm tại LTTD</h4>
+          <h5>Công ty TNHH KDE Việt Nam</h5>
         </WrapperContainerRight>
       </div>
     </div>

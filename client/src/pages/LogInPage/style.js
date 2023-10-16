@@ -8,7 +8,7 @@ export const WrapperContainerLeft = styled.div`
 `;
 
 export const WrapperContainerRight = styled.div`
-  width: 300px;
+  width: 20%;
   background: linear-gradient(
     136deg,
     rgb(240, 248, 255) -1%,
