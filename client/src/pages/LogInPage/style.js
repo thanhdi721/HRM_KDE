@@ -8,7 +8,7 @@ export const WrapperContainerLeft = styled.div`
 `;
 
 export const WrapperContainerRight = styled.div`
-  width: 300px;
+  width: 50%;
   background: linear-gradient(
     136deg,
     rgb(240, 248, 255) -1%,
@@ -19,6 +19,9 @@ export const WrapperContainerRight = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 export const WrapperTextLight = styled.span`
   color: rgb(13, 92, 182);

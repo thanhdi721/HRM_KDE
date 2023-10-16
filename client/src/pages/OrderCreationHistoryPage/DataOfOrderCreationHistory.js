@@ -29,7 +29,7 @@ const DataOfOrderCreationHistory = () => {
               <td className="d-flex justify-content-between">
                 <ModalComponent>Xóa</ModalComponent>
 
-                <button className="btn  btn-primary">Sửa </button>
+                <button className="btn btn-primary">Sửa </button>
               </td>
             </tr>
           </tbody>

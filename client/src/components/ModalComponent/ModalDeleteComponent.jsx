@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
+import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const ModalComponent = () => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState(
-    "Việc làm của bạn sẽ không khôi phục được!!!"
+    "Việc làm của bạn sẽ không khôi phục được!!!",
   );
   const showModal = () => {
     setOpen(true);
@@ -24,9 +25,11 @@ const ModalComponent = () => {
   };
   return (
     <div>
-      <button className="btn btn-danger" onClick={showModal}>
-        Xóa
-      </button>
+      <ButtonComponent
+        onClick={showModal}
+        textbutton={"Xóa"}
+        className="btn btn-danger"
+      />
       <Modal
         title="Bạn có chắc là muốn tiếp tục chứ chứ ?"
         open={open}
