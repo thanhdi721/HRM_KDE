@@ -49,11 +49,12 @@ const loginUser = async (req, res) => {
             });
         }
         const response = await UserService.loginUser(req.body)
-        const { refreshToken, ...newReponse } = response
+        const { refresh_token, ...newReponse } = response
         // console.log('response', response);
-        res.cookie('refresh_token', refreshToken,{
+        res.cookie('refresh_token', refresh_token,{
             httpOnly: true,
-            Secure: true,
+            secure: false,
+            sameSite: 'strict'
         })
         return res.status(200).json(newReponse);
     } catch (e) {
@@ -130,8 +131,9 @@ const getDetailsUser = async (req, res) => {
 }
 
 const refreshToken = async (req, res) => {
+    console.log('req.cookies.refresh_token', req.cookies.refresh);
     try {
-        const token = req.headers.token.split(' ')[1];
+        const token = req.cookies.refresh_token
         if(!token){
             return res.status(200).json({
                 status: 'error',

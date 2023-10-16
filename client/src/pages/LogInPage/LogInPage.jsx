@@ -1,5 +1,5 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
+import {useDispatch} from "react-redux";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import {
   WrapperContainerLeft,
@@ -7,25 +7,44 @@ import {
   WrapperTextLight,
 } from "./style";
 import Loading from "../../components/LoadingComponent/Loading";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import imageLogo from "../../assets/images/logo.png";
 import { Image } from "antd";
 import * as UserService from '../../services/UserService';
 import { useMutationHooks } from "../../hooks/useMutationHooks";
-// import InputForm from "../../components/InputForm/InputForm";
-
+// import * as message from "../../components/Message/Message";
+import jwt_decode from "jwt-decode"
+import { updatelUser } from "../../redux/slides/userSlide";
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const [msnv, setMsnv] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch()
 
   const mutation = useMutationHooks(
     data => UserService.loginUser(data)
   );
-  const { data, isLoading } = mutation
-  console.log('mutation', mutation);
+  const { data, isLoading, isSuccess } = mutation
+  useEffect(() => {
+    if(isSuccess){
+      navigate('/infoPage')
+      localStorage.setItem('access_token',JSON.stringify(data?.access_token));
+      if(data?.access_token){
+        const decoded = jwt_decode(data?.access_token)
+        if(decoded?.id){
+          handleGetDetailsUser(decoded?.id, data?.access_token)
+        }
+      }
+    }
+  },[isSuccess])
 
+  const handleGetDetailsUser = async(id, token) => {
+    const res = await UserService.getDetailsUser(id,token);
+    dispatch(updatelUser({...res?.data, access_token: token}))
+  }
+
+  // console.log('mutation', mutation);
   const handleLogin = async () => {
     mutation.mutate({
       msnv,
