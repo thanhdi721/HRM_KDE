@@ -34,7 +34,7 @@ const createUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const {msnv, fullName, password, confirmPassword, gender,position,department,office,workHours} = req.body;
+        const {msnv, password} = req.body;
         const reg = /^[a-zA-Z0-9]+$/
         const isCheckMsnv = reg.test(msnv)
         if(!msnv || !password) {
@@ -51,7 +51,10 @@ const loginUser = async (req, res) => {
         const response = await UserService.loginUser(req.body)
         const { refreshToken, ...newReponse } = response
         // console.log('response', response);
-        res.cookie('refresh-token', refreshToken)
+        res.cookie('refresh_token', refreshToken,{
+            httpOnly: true,
+            Secure: true,
+        })
         return res.status(200).json(newReponse);
     } catch (e) {
         return res.status(404).json({
