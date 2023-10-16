@@ -1,11 +1,13 @@
 import React, { Fragment } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes/index";
+import { AuthProvider } from "./config/AuthContext";
 import DefaultComponents from "./components/DefaultComponent/DefaultComponent";
 
 function App() {
   return (
     <div>
+      <AuthProvider>
       <Router>
         <Routes>
           {routes.map((route) => {
@@ -25,6 +27,7 @@ function App() {
           })}
         </Routes>
       </Router>
+      </AuthProvider>
     </div>
   );
 }
