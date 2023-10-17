@@ -17,8 +17,13 @@ export const getDetailsUser = async (id, access_token) => {
 }
 
 export const refreshToken = async () => {
-    const res = await axios.post(`http://localhost:5000/api/user/refresh-token`,{
-        withCredentials: true
-    })
-    return res.data
-}
+    try {
+      const res = await axios.post(`http://localhost:5000/api/user/refresh-token`, null, {
+        withCredentials: true, // Đảm bảo rằng cookie được bao gồm trong yêu cầu
+      });
+      return res.data;
+    } catch (error) {
+      console.error("Error refreshing token:", error);
+      throw error; // Nếu có lỗi khi gửi yêu cầu, ném ngoại lệ để xử lý ở phía calling function
+    }
+  };
