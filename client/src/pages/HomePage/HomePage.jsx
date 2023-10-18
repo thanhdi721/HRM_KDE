@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Col, DatePicker, Radio, Select } from "antd";
 
 import {
@@ -9,15 +9,30 @@ import {
 } from "./style.js";
 import "./SetTime.js";
 import TextArea from "antd/es/input/TextArea.js";
-import UploadButton from "./UploadButton.js";
+// import UploadButton from "./UploadButton.js";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent.jsx";
 
 import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent.jsx";
 import SetTime from "./SetTime.js";
+import { useSelector } from "react-redux";
 const handleChange = (value) => {
   console.log(`selected ${value}`);
 };
 const HomePage = () => {
+  const user = useSelector((state) => state.user)
+  const [image, setImage] = useState()
+
+  useEffect(() =>{
+    return () => {
+      image && URL.revokeObjectURL(image.preview)
+    }
+  }, [image])
+
+  const handlePreviewImage =(e) => {
+    const file = e.target.files[0]
+    file.preview = URL.createObjectURL(file)
+    setImage(file)
+  }
   return (
     <>
       <WrapperBody>
@@ -25,17 +40,17 @@ const HomePage = () => {
           <WrapperContainerTitle>Tạo đơn ra cổng</WrapperContainerTitle>
           <WrapperContainerText>
             <Col span={8}>Họ & tên CNV:</Col>
-            <Col span={8}>PHẠM VĂN KIỂU</Col>
+            <Col span={8}>{user.fullName}</Col>
             <Col span={8}></Col>
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>MSNV:</Col>
-            <Col span={8}>10975</Col>
+            <Col span={8}>{user.msnv}</Col>
             <Col span={8}></Col>
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>Bộ phận:</Col>
-            <Col span={8}>Phòng Công nghệ thông tin</Col>
+            <Col span={8}>{user.office}</Col>
             <Col span={8}></Col>
           </WrapperContainerText>
           <WrapperContainerText>
@@ -83,13 +98,7 @@ const HomePage = () => {
                   {
                     value: "Về sớm",
                     label: "Về sớm",
-                  },
-
-                  {
-                    value: "tự trốn",
-                    label: "tự trốn",
-                    disabled: true,
-                  },
+                  }
                 ]}
               />
             </Col>
@@ -112,9 +121,16 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}>Hình ảnh tài sản:</Col>
             <Col span={8}>
-              <UploadButton />
+                <input
+                  type="file"
+                  onChange={handlePreviewImage}
+                />
             </Col>
-            <Col span={8}></Col>
+            <Col span={8} style={{margin: '5px'}}>
+              {image && (
+                <img src={image.preview} alt="" width="100%" />
+              )}
+            </Col>
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>CBQL duyệt:</Col>
@@ -126,20 +142,6 @@ const HomePage = () => {
                 }}
                 onChange={handleChange}
                 options={[
-                  {
-                    value: "Cu Thống",
-                    label: "Cu Thống",
-                  },
-                  {
-                    value: "Cu Trực",
-                    label: "Cu Trực",
-                  },
-
-                  {
-                    value: "tự trốn",
-                    label: "tự trốn",
-                    disabled: true,
-                  },
                 ]}
               />
             </Col>
