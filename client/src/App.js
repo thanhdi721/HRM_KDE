@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     const handleDecoded = () => {
-      let storageData = localStorage.getItem('access_token');
+      let storageData = localStorage.getItem('refresh_token');
       let decoded = {};
       if (storageData && isJsonString(storageData)) {
         storageData = JSON.parse(storageData);
@@ -28,7 +28,6 @@ function App() {
         dispatch(updatelUser({ ...res?.data, access_token: token }));
       } catch (error) {
         console.error("Error fetching user details:", error);
-        // Handle error, e.g., redirect to login page
       }
     };
 
@@ -42,7 +41,6 @@ function App() {
             handleGetDetailsUser(decoded.id, data?.access_token);
           } catch (error) {
             console.error("Error refreshing token:", error);
-            // Handle error, e.g., redirect to login page
           }
         } else {
           handleGetDetailsUser(decoded.id, storageData);

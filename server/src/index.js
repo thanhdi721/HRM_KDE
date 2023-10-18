@@ -9,10 +9,17 @@ const port = process.env.PORT || 5000;
 const db = require('./config/db');
 const routes = require('./routes');
 
+const corsOptions = {
+    origin: 'http://localhost:3000', // Địa chỉ của máy chủ React của bạn
+    credentials: true, // Bật chế độ credentials (bao gồm cookie) trong yêu cầu CORS
+};
+  
+app.use(cors(corsOptions));
 
-app.use(cors());
 app.use(bodyParser.json());
 app.use(cookieParser());
+
+
 
 db.connect();
 

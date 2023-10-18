@@ -5,6 +5,7 @@ import { WrapperHeader, WrapperIconHeader } from "./style";
 import imageLogo from "../../assets/images/logo.png";
 import { UnorderedListOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import * as UserService from "../../services/UserService";
 
 
 
@@ -12,9 +13,8 @@ const HeaderComponents = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user)
 
-  const handleLogout = () => {
-    // logout();
-    navigate("/");
+  const handleLogout = async () => {
+    await UserService.logoutUser()
   };
 
   const handleNavigateLogo = () => {
@@ -83,7 +83,7 @@ const HeaderComponents = () => {
                   },
                 {
                   key: "7",
-                  label: (user && <button onClick={handleLogout}>Đăng xuất</button>),
+                  label: (user && <a onClick={handleLogout}>Đăng xuất</a>),
                 },
                 ]
               }}
