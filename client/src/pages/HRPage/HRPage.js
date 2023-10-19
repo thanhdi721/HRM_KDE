@@ -1,18 +1,16 @@
 import React, {Component} from "react";
 import HR from "./HR";
-import HRData from "./HRData";
 
 class HRPage extends Component {
     render() {
         
         return (
-            <div className="/">
-                <div className="container mt-4">
-                    <ul>
-                        {HRData.map(HRs => (
-                            <HR key={HRs.msvn} HRs={HRs}/>
-                        ))}
-                    </ul>
+            <div className="container mt-4">
+                <div className="/">
+                    <h2>DANH SÁCH RA CỔNG</h2>
+                </div>
+                <div className="/">
+                    <HR />
                 </div>
             </div>
         );
