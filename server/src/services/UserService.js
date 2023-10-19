@@ -1,7 +1,7 @@
 const User = require('../models/PersonnelModel');
 const bcrypt = require('bcrypt');
 
-const { generalAccessToken, generalRefreshToken } = require('./JWtService');
+const { generalAccessToken, generalRefreshToken } = require('./JwtService');
 
 const createUser = async (newUser) => {
     const {msnv, fullName, password, confirmPassword, gender,position,department,office,workHours} = newUser;

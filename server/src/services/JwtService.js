@@ -5,9 +5,10 @@ dotenv.config();
 const generalAccessToken = (payload) => {
     const access_token = jwt.sign({
         ...payload
-    }, process.env.ACCESS_TOKEN, { expiresIn: '30s' });
+    }, process.env.ACCESS_TOKEN, { expiresIn: '15m' });
     return access_token;
 };
+
 
 const generalRefreshToken = (payload) => {
     const refresh_token = jwt.sign({
@@ -18,12 +19,11 @@ const generalRefreshToken = (payload) => {
 
 const RefreshTokenJWtService = (token) => {
     return new Promise((resolve, reject) => {
-        try{
-            console.log('token', token);
+        try {
             jwt.verify(token, process.env.REFRESH_TOKEN, (err, user) => {
                 if (err) {
                     console.log('err', err);
-                    resolve({
+                    reject({
                         status: 'error',
                         message: 'Token không hợp lệ'
                     });
@@ -31,17 +31,17 @@ const RefreshTokenJWtService = (token) => {
                 const access_token = generalAccessToken({
                     id: user?.id,
                     isAdmin: user?.isAdmin
-                })
-                console.log('access_token', access_token);
+                });
                 resolve({
-                    status:'success',
+                    status: 'success',
                     access_token
-                })
-            })
-        } catch(e){
-            reject(e)
+                });
+            });
+        } catch (e) {
+            reject(e);
         }
-    })
+    });
 };
+
 
 module.exports = { generalAccessToken, generalRefreshToken,RefreshTokenJWtService };

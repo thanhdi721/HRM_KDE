@@ -1,32 +1,44 @@
-import { Col, Dropdown, Image } from "antd";
-import React from "react";
+import { Col, Dropdown, Image, Popover } from "antd";
+// import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { WrapperHeader, WrapperIconHeader } from "./style";
 import imageLogo from "../../assets/images/logo.png";
-import { UnorderedListOutlined } from "@ant-design/icons";
+import { UnorderedListOutlined,CaretDownOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import * as UserService from "../../services/UserService";
-
+import {useDispatch} from "react-redux";
+import { resetUser } from "../../redux/slides/userSlide";
 
 
 const HeaderComponents = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user)
-
+  console.log('use',user);
   const handleLogout = async () => {
     await UserService.logoutUser()
+    dispatch(resetUser())
   };
 
   const handleNavigateLogo = () => {
     navigate("/homepage");
   };
+  const handleNavigateLogin = () => {
+    navigate("/");
+  }
+  const content = (
+    <div>
+      <a onClick={handleLogout}>Đăng xuất</a>
+    </div>
+  )
   return (
     <div
       style={{
         height: "100%",
         width: "100%",
         display: "flex",
-        background: "#9255FD",
+        background: "#FCE09B",
+        color: "#B2533E",
         justifyContent: "center",
       }}
     >
@@ -42,6 +54,26 @@ const HeaderComponents = () => {
         </Col>
         <Col span={15}></Col>
         <Col span={5}>
+          {user?.fullName? (
+            <>
+              <Popover content={content} trigger='click'>
+                <div style={{cursor:'pointer'}}>
+                  {user.fullName}
+                  <span style={{marginLeft:'20px'}}><CaretDownOutlined /></span>
+                </div>
+              </Popover>
+            </>
+          ):(
+            <>
+              <div onClick={handleNavigateLogin} style={{cursor:'pointer'}}>
+                <span>Đăng nhập/Đăng ký</span>
+                <div>
+                  <span>Tài khoản</span>
+                  <CaretDownOutlined />
+                </div>
+              </div>
+            </>
+          )}
           <WrapperIconHeader>
             <Dropdown
               menu={{
@@ -81,10 +113,6 @@ const HeaderComponents = () => {
                       </a>
                     ),
                   },
-                {
-                  key: "7",
-                  label: (user && <a onClick={handleLogout}>Đăng xuất</a>),
-                },
                 ]
               }}
               placement="bottomRight"
