@@ -7,13 +7,20 @@ import * as UserService from "./services/UserService";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { updatelUser } from "./redux/slides/userSlide";
+import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const handleDecoded = () => {
-      let storageData = localStorage.getItem('refresh_token');
+    const {storageData, decoded} = handleDecoded()
+    if(decoded?.id){
+      handleGetDetailsUser(decoded?.id, storageData)
+    }
+  }, []);
+
+  const handleDecoded = () => {
+      let storageData = localStorage.getItem('access_token');
       let decoded = {};
       if (storageData && isJsonString(storageData)) {
         storageData = JSON.parse(storageData);
@@ -21,35 +28,31 @@ function App() {
       }
       return { decoded, storageData };
     };
-
-    const handleGetDetailsUser = async (id, token) => {
-      try {
-        const res = await UserService.getDetailsUser(id, token);
-        dispatch(updatelUser({ ...res?.data, access_token: token }));
-      } catch (error) {
-        console.error("Error fetching user details:", error);
-      }
-    };
-
-    const checkAndRefreshToken = async () => {
-      const { storageData, decoded } = handleDecoded();
-      if (decoded?.id) {
-        const currentTime = new Date();
-        if (decoded?.exp < currentTime.getTime() / 1000) {
-          try {
-            const data = await UserService.refreshToken();
-            handleGetDetailsUser(decoded.id, data?.access_token);
-          } catch (error) {
-            console.error("Error refreshing token:", error);
-          }
-        } else {
-          handleGetDetailsUser(decoded.id, storageData);
+    axios.interceptors.request.use(async (config) => {
+      const currentTime = new Date();
+      const { decoded } = handleDecoded();
+    
+      if (decoded?.exp < currentTime.getTime() / 1000) {
+        try {
+          const data = await UserService.refreshToken();
+          config.headers['token'] = `Bearer ${data?.access_token}`;
+        } catch (error) {
+          // Xử lý lỗi khi không thể làm mới token, ví dụ: đưa người dùng đến trang đăng nhập
+          // redirectUserToLogin();
+          console.error("Error refreshing token:", error);
+          throw error; // Ném ngoại lệ để xử lý ở phía calling function
         }
       }
-    };
-
-    checkAndRefreshToken();
-  }, [dispatch]);
+      return config;
+    }, (err) => {
+      // Xử lý lỗi ở đây (nếu cần)
+      return Promise.reject(err);
+    });
+    
+  const handleGetDetailsUser = async (id, token) => {
+    const res = await UserService.getDetailsUser(id, token)
+    dispatch(updatelUser({...res?.data, access_token: token}))
+  }
 
   return (
     <div>

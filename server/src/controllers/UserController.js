@@ -1,5 +1,5 @@
 const UserService = require('../services/UserService');
-const JwtService = require('../services/JWtService');
+const JwtService = require('../services/JwtService');
 
 const createUser = async (req, res) => {
     try{
@@ -131,7 +131,7 @@ const getDetailsUser = async (req, res) => {
 }
 
 const refreshToken = async (req, res) => {
-    console.log('req.cookies.refresh_token', req.cookies.refresh);
+    console.log('req.cookies.refresh_token', req.cookies.refresh_token);
     try {
         const token = req.cookies.refresh_token
         if(!token){
