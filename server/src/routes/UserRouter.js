@@ -6,6 +6,7 @@ const { authMiddleware,authUserMiddleware } = require('../middleWare/authMiddlew
 
 router.post('/register', userController.createUser);
 router.post('/login', userController.loginUser);
+router.post('/log-out', userController.logoutUser);
 router.put('/update-user/:id', userController.updateUser);
 router.delete('/delete-user/:id',authMiddleware, userController.deleteUser);
 router.get('/getAll',authMiddleware, userController.getAllUser);

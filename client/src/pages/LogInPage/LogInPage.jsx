@@ -28,13 +28,13 @@ const SignInPage = () => {
   const { data, isLoading, isSuccess } = mutation
   useEffect(() => {
     if(isSuccess){
-      navigate('/infoPage')
       localStorage.setItem('access_token',JSON.stringify(data?.access_token));
       if(data?.access_token){
         const decoded = jwt_decode(data?.access_token)
         if(decoded?.id){
           handleGetDetailsUser(decoded?.id, data?.access_token)
         }
+        navigate('/infoPage')
       }
     }
   },[isSuccess])
@@ -48,8 +48,8 @@ const SignInPage = () => {
   const handleLogin = async () => {
     mutation.mutate({
       msnv,
-      password
-    })
+      password,
+    });
   };
   
   const [isShowPassword, setIsShowPassword] = useState(false);
