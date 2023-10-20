@@ -18,6 +18,7 @@ const HeaderComponents = () => {
   const handleLogout = async () => {
     await UserService.logoutUser()
     dispatch(resetUser())
+    navigate("/");
   };
 
   const handleNavigateLogo = () => {
@@ -28,7 +29,7 @@ const HeaderComponents = () => {
   }
   const content = (
     <div>
-      <a onClick={handleLogout}>Đăng xuất</a>
+      <button onClick={handleLogout}>Đăng xuất</button>
     </div>
   )
   return (

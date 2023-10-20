@@ -33,24 +33,33 @@ const authMiddleware = (req, res, next) => {
 
 const authUserMiddleware = (req, res, next) => {
     const tokenHeader = req.headers.token;
-    const userId = req.params.id;
+    if (!tokenHeader) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'Token không được cung cấp'
+      });
+    }
+  
     const token = tokenHeader.split(' ')[1];
-    jwt.verify(token, process.env.ACCESS_TOKEN, function(err, user) {
-        if (err) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Bạn không có quyền truy cập'
-            });
-        }
-        if (user?.isAdmin || user?.id === userId) {
-            next();
-        } else {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Bạn không có quyền truy cập'
-            });
-        }
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+      if (err) {
+        console.error("Lỗi xác thực token:", err);
+        return res.status(401).json({
+          status: 'error',
+          message: 'Token không hợp lệ hoặc đã hết hạn'
+        });
+      }
+  
+      if (user?.isAdmin || user?.id === req.params.id) {
+        next();
+      } else {
+        return res.status(401).json({
+          status: 'error',
+          message: 'Bạn không có quyền truy cập tài nguyên này'
+        });
+      }
     });
-}
+  };
+  
 
 module.exports = { authMiddleware, authUserMiddleware };
