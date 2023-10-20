@@ -29,7 +29,7 @@ const HeaderComponents = () => {
   }
   const content = (
     <div>
-      <button onClick={handleLogout}>Đăng xuất</button>
+      <button style={{border:'none',background:'transparent'}} onClick={handleLogout}>Đăng xuất</button>
     </div>
   )
   return (
