@@ -7,7 +7,6 @@ import * as UserService from "./services/UserService";
 import jwt_decode from "jwt-decode";
 import { useDispatch } from "react-redux";
 import { updatelUser } from "./redux/slides/userSlide";
-import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,7 +27,7 @@ function App() {
       }
       return { decoded, storageData };
     };
-    axios.interceptors.request.use(async (config) => {
+    UserService.axiosJWT.interceptors.request.use(async (config) => {
       const currentTime = new Date();
       const { decoded } = handleDecoded();
     
@@ -37,8 +36,6 @@ function App() {
           const data = await UserService.refreshToken();
           config.headers['token'] = `Bearer ${data?.access_token}`;
         } catch (error) {
-          // Xử lý lỗi khi không thể làm mới token, ví dụ: đưa người dùng đến trang đăng nhập
-          // redirectUserToLogin();
           console.error("Error refreshing token:", error);
           throw error; // Ném ngoại lệ để xử lý ở phía calling function
         }
