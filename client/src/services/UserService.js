@@ -8,7 +8,7 @@ export const loginUser = async (data) => {
 }
 
 export const getDetailsUser = async (id, access_token) => {
-    const res = await axios.get(`http://localhost:5000/api/user/get-details/${id}`, {
+    const res = await axiosJWT.get(`http://localhost:5000/api/user/get-details/${id}`, {
         headers: {
             token: `Bearer ${access_token}`,
         }
@@ -17,15 +17,10 @@ export const getDetailsUser = async (id, access_token) => {
 }
 
 export const refreshToken = async () => {
-    try {
-      const res = await axios.post(`http://localhost:5000/api/user/refresh-token`, null, {
-        withCredentials: true, // Đảm bảo rằng cookie được bao gồm trong yêu cầu
+      const res = await axios.post('http://localhost:5000/api/user/refresh-token', null, {
+        withCredentials: true,
       });
       return res.data;
-    } catch (error) {
-      console.error("Error refreshing token:", error);
-      throw error; // Nếu có lỗi khi gửi yêu cầu, ném ngoại lệ để xử lý ở phía calling function
-    }
 };
 
 export const logoutUser = async () => {
