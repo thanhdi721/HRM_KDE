@@ -38,11 +38,11 @@ const Info = () => {
                 </tr>
                 <tr>
                     <td>CBQL trực tiếp:</td>
-                    <td></td>
+                    <td>{user.directManagers}</td>
                 </tr>
                 <tr>
                     <td>CBQL cấp trên:</td>
-                    <td></td>
+                    <td>{user.superiorManagers}</td>
                 </tr>
               </tbody>
             </table>

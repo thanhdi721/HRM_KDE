@@ -3,10 +3,10 @@ const JwtService = require('../services/JwtService');
 
 const createUser = async (req, res) => {
     try{
-        const {msnv, fullName, password, confirmPassword, gender,position,department,office,workHours} = req.body;
+        const {msnv, fullName, password, confirmPassword, gender,position,department,office,workHours,directManagers,superiorManagers} = req.body;
         const reg = /^[a-zA-Z0-9]+$/
         const isCheckMsnv = reg.test(msnv)
-        if(!msnv || !fullName || !password || !confirmPassword || !gender || !position || !department || !office || !workHours){
+        if(!msnv || !fullName || !password || !confirmPassword || !gender || !position || !department || !office || !workHours, !superiorManagers || !directManagers){
             return res.status(200).json({
                 status: 'error',
                 message:'Vui lòng nhập đầy đủ thông tin'

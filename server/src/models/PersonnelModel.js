@@ -42,6 +42,14 @@ const personnelSchema = new Schema({
         type: String,
         required: true
     },
+    directManagers: {        
+        type: String,
+        required: true
+    },
+    superiorManagers: {        
+        type: String,
+        required: true
+    },
     access_token: { type: String },
     refresh_token: { type: String }
 });
