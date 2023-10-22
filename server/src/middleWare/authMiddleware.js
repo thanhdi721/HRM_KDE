@@ -32,34 +32,36 @@ const authMiddleware = (req, res, next) => {
 }
 
 const authUserMiddleware = (req, res, next) => {
-    const tokenHeader = req.headers.token;
-    if (!tokenHeader) {
+  const tokenHeader = req.headers.tokenheader; // Đọc token từ header 'tokenheader'
+  console.log('tokenHeader', tokenHeader);
+  if (!tokenHeader) {
+    return res.status(401).json({
+      status: 'error',
+      message: 'Token không được cung cấp'
+    });
+  }
+
+  const token = tokenHeader.split(' ')[1]; // Tách token từ header 'tokenheader'
+  jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+    if (err) {
+      console.error("Lỗi xác thực token:", err);
       return res.status(401).json({
         status: 'error',
-        message: 'Token không được cung cấp'
+        message: 'Token không hợp lệ hoặc đã hết hạn'
       });
     }
-  
-    const token = tokenHeader.split(' ')[1];
-    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
-      if (err) {
-        console.error("Lỗi xác thực token:", err);
-        return res.status(401).json({
-          status: 'error',
-          message: 'Token không hợp lệ hoặc đã hết hạn'
-        });
-      }
-  
-      if (user?.isAdmin || user?.id === req.params.id) {
-        next();
-      } else {
-        return res.status(401).json({
-          status: 'error',
-          message: 'Bạn không có quyền truy cập tài nguyên này'
-        });
-      }
-    });
-  };
+
+    if (user?.isAdmin || user?.id === req.params.id) {
+      next();
+    } else {
+      return res.status(401).json({
+        status: 'error',
+        message: 'Bạn không có quyền truy cập tài nguyên này'
+      });
+    }
+  });
+};
+
   
 
 module.exports = { authMiddleware, authUserMiddleware };
