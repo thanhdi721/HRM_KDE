@@ -114,14 +114,16 @@ const getAllUser = async (req, res) => {
 
 const getDetailsUser = async (req, res) => {
     try {
-        const userId = req.params.id
+        const userId = req.params.id;
+        console.log('userId', userId);
         if(!userId){
             return res.status(200).json({
                 status: 'error',
                 message: 'Vui lòng nhập đầy đủ thông tin'
             });
         }
-        const response = await UserService.getDetailsUser(userId)
+        const response = await UserService.getDetailsUser(userId);
+        console.log('response from getDetailsUser', response);
         return res.status(200).json(response);
     } catch (e) {
         return res.status(404).json({
@@ -133,9 +135,9 @@ const getDetailsUser = async (req, res) => {
 const refreshToken = async (req, res) => {
     console.log('req.cookies.refresh_token', req.cookies.refresh_token);
     try {
-        const token = req.cookies.refresh_token
-        if(!token){
-            return res.status(200).json({
+        const token = req.cookies.refresh_token;
+        if (!token) {
+            return res.status(401).json({
                 status: 'error',
                 message: 'Yêu cầu có token'
             });

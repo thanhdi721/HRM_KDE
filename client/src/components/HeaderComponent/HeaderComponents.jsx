@@ -14,7 +14,6 @@ const HeaderComponents = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user)
-  console.log('use',user);
   const handleLogout = async () => {
     await UserService.logoutUser()
     dispatch(resetUser())
