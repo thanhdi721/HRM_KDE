@@ -142,6 +142,14 @@ const HomePage = () => {
                 }}
                 onChange={handleChange}
                 options={[
+                  {
+                    value: <span>{user.directManagers}</span>,
+                    label: <span>{user.directManagers}</span>,
+                  },
+                  {
+                    value: <span>{user.superiorManagers}</span>,
+                    label: <span>{user.superiorManagers}</span>,
+                  }
                 ]}
               />
             </Col>
