@@ -8,6 +8,9 @@ const initialState = {
   position: '',
   department: '',
   office: '',
+  directManagers: '',
+  superiorManagers: '',
+  workHours: '',
 };
 
 export const userSlide = createSlice({
@@ -15,7 +18,7 @@ export const userSlide = createSlice({
   initialState,
   reducers: {
     updatelUser: (state, action) => {
-      const { msnv,fullName, access_token, gender,position, department, office } = action.payload;
+      const { msnv,fullName, access_token, gender,position, department, office,directManagers,superiorManagers,workHours } = action.payload;
       state.access_token = access_token;
       state.msnv = msnv;
       state.fullName = fullName;
@@ -23,6 +26,9 @@ export const userSlide = createSlice({
       state.position = position;
       state.department = department;
       state.office = office;
+      state.directManagers = directManagers;
+      state.superiorManagers = superiorManagers;
+      state.workHours = workHours;
     },
     resetUser: (state) => {
       state.access_token = '';
@@ -32,6 +38,9 @@ export const userSlide = createSlice({
       state.position = '';
       state.department = '';
       state.office = '';
+      state.directManagers = '';
+      state.superiorManagers = '';
+      state.workHours = '';
     }
   },
 });
