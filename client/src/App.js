@@ -12,13 +12,32 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const {storageData, decoded} = handleDecoded()
-    if(decoded?.id){
-      handleGetDetailsUser(decoded?.id, storageData)
-    }
-  }, []);
+    const setupAxiosInterceptors = () => {
+      UserService.axiosJWT.interceptors.request.use(
+        async (config) => {
+          const currentTime = new Date();
+          const { decoded, storageData } = handleDecoded();
+          if (decoded?.exp < currentTime.getTime() / 1000) {
+            try {
+              const data = await UserService.refreshToken();
+              config.headers['Authorization'] = `Bearer ${data?.access_token}`;
+              // Lưu token mới vào localStorage để sử dụng sau này
+              localStorage.setItem('access_token', JSON.stringify(data.access_token));
+            } catch (error) {
+              console.error("Error refreshing token:", error);
+              throw error;
+            }
+          }
+          return config;
+        },
+        (error) => {
+          // Xử lý lỗi request ở đây (nếu cần)
+          return Promise.reject(error);
+        }
+      );
+    };
 
-  const handleDecoded = () => {
+    const handleDecoded = () => {
       let storageData = localStorage.getItem('access_token');
       let decoded = {};
       if (storageData && isJsonString(storageData)) {
@@ -27,29 +46,24 @@ function App() {
       }
       return { decoded, storageData };
     };
-    UserService.axiosJWT.interceptors.request.use(async (config) => {
-      const currentTime = new Date();
-      const { decoded } = handleDecoded();
-    
-      if (decoded?.exp < currentTime.getTime() / 1000) {
-        try {
-          const data = await UserService.refreshToken();
-          config.headers['token'] = `Bearer ${data?.access_token}`;
-        } catch (error) {
-          console.error("Error refreshing token:", error);
-          throw error; // Ném ngoại lệ để xử lý ở phía calling function
-        }
-      }
-      return config;
-    }, (err) => {
-      // Xử lý lỗi ở đây (nếu cần)
-      return Promise.reject(err);
-    });
-    
+
+    // Gọi hàm setup interceptors ở đây
+    setupAxiosInterceptors();
+
+    const { storageData, decoded } = handleDecoded();
+    if (decoded?.id) {
+      handleGetDetailsUser(decoded?.id, storageData);
+    }
+  }, []);
+
   const handleGetDetailsUser = async (id, token) => {
-    const res = await UserService.getDetailsUser(id, token)
-    dispatch(updatelUser({...res?.data, access_token: token}))
-  }
+    try {
+      const res = await UserService.getDetailsUser(id, token);
+      dispatch(updatelUser({ ...res?.data, access_token: token }));
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+    }
+  };
 
   return (
     <div>

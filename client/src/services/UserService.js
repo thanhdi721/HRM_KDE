@@ -1,31 +1,54 @@
-import axios from "axios"
+import axios from "axios";
 
-export const axiosJWT = axios.create()
+export const axiosJWT = axios.create();
 
 export const loginUser = async (data) => {
-    const res = await axios.post(`http://localhost:5000/api/user/login`, data)
-    return res.data
-}
+  try {
+    const res = await axios.post('http://localhost:5000/api/user/login', data, {
+      withCredentials: true
+    });
+    return res.data;
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error; // Ném lỗi để xử lý ở phía calling function (nếu cần)
+  }
+};
 
 export const getDetailsUser = async (id, access_token) => {
+  try {
     const res = await axiosJWT.get(`http://localhost:5000/api/user/get-details/${id}`, {
-        headers: {
-            token: `Bearer ${access_token}`,
-        }
-    })
-    return res.data
-}
+      headers: {
+        tokenheader: `Bearer ${access_token}`
+      },
+      withCredentials: true
+    });
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    throw error; // Ném lỗi để xử lý ở phía calling function (nếu cần)
+  }
+};
 
 export const refreshToken = async () => {
-      const res = await axios.post('http://localhost:5000/api/user/refresh-token', null, {
-        withCredentials: true,
-      });
-      return res.data;
+  try {
+    const res = await axios.post('http://localhost:5000/api/user/refresh-token', null, {
+      withCredentials: true
+    });
+    return res.data;
+  } catch (error) {
+    console.error("Error refreshing token:", error);
+    throw error; // Ném lỗi để xử lý ở phía calling function (nếu cần)
+  }
 };
 
 export const logoutUser = async () => {
+  try {
     const res = await axios.post(`http://localhost:5000/api/user/log-out`, null, {
-      withCredentials: true, // Đảm bảo rằng cookie được bao gồm trong yêu cầu
+      withCredentials: true
     });
     return res.data;
+  } catch (error) {
+    console.error("Error logging out:", error);
+    throw error; // Ném lỗi để xử lý ở phía calling function (nếu cần)
+  }
 };
