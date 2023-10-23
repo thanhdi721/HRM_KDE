@@ -35,6 +35,7 @@ const HomePage = () => {
   const gatePass = useSelector((state) => state.gatePass);
   const dispatch = useDispatch();
   const [image, setImage] = useState();
+  const [isAssetSelected, setIsAssetSelected] = useState(false);
 
   useEffect(() => {
     if (user.fullName) {
@@ -95,11 +96,22 @@ const HomePage = () => {
     setImage(file);
   };
 
+  const handleRadioChange = (e) => {
+    console.log(isAssetSelected);
+    setIsAssetSelected(e.target.value === "1");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const assetOutBoolean = isAssetSelected;
+    dispatch(updateGatePassField({ field: "assetOut", value: assetOutBoolean }));
+
+    if (!isAssetSelected) {
+      dispatch(updateGatePassField({ field: "assetDescription", value: "" }));
+    }
+
     dispatch(createGatePass(gatePass))
       .then(() => {
-        // Hành động sau khi tạo phiếu thành công
         dispatch(resetGatePass());
       })
       .catch((error) => {
@@ -113,6 +125,8 @@ const HomePage = () => {
   for (let i = 5; i <= 60; i += 5) {
     minuteOptions.push(i);
   }
+
+  
   return (
     <form onSubmit={handleSubmit}>
       <WrapperBody>
@@ -148,10 +162,6 @@ const HomePage = () => {
                 onChange={handleFromTimeChange}
                 value={gatePass.from.time}
               />
-              {/* <SetTime
-                onChange={handleFromTimeChange}
-                value={gatePass.from.time}
-              /> */}
             </Col>
             <Col span={8}>
               <span>Ngày: </span>
@@ -166,7 +176,6 @@ const HomePage = () => {
             <Col span={8}>Đến:</Col>
             <Col span={8}>
               <span>Thời gian: </span>
-              {/* <SetTime onChange={handleToTimeChange} value={gatePass.to.time} /> */}
               <TimePicker
                 format="HH:mm"
                 onChange={handleToTimeChange}
@@ -227,40 +236,32 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}>Có đem vật tư:</Col>
             <Col span={8}>
-              <Radio.Group
-                name="radiogroup"
-                defaultValue={gatePass.assetOut ? 1 : 2}
-                value={gatePass.assetOut ? 1 : 2}
-                onChange={(e) => {
-                  const isAssetOut = e.target.value === 1;
-                  // Cập nhật giá trị assetOut trong gatePass khi người dùng thay đổi radio button
-                  dispatch(
-                    updateGatePassField({
-                      field: "assetOut",
-                      value: isAssetOut,
-                    }),
-                  );
-                }}
-              >
-                <Radio value={1}>Có</Radio>
-                <Radio value={2}>Không</Radio>
-              </Radio.Group>
+            <Radio.Group
+              name="radiogroup"
+              defaultValue={gatePass.assetOut ? "1" : "2"}
+              value={isAssetSelected ? "1" : "2"}
+              onChange={handleRadioChange}
+            >
+              <Radio value="1">Có</Radio>
+              <Radio value="2">Không</Radio>
+            </Radio.Group>
             </Col>
             <Col span={8}>
-              <TextArea
-                rows={2}
-                placeholder="Nhập lý do"
-                value={gatePass.assetDescription}
-                onChange={(e) => {
-                  // Cập nhật giá trị reason trong gatePass khi người dùng nhập vào TextArea
-                  dispatch(
-                    updateGatePassField({
-                      field: "assetDescription",
-                      value: e.target.value,
-                    }),
-                  );
-                }}
-              />
+              {isAssetSelected && (
+                <TextArea
+                  rows={2}
+                  placeholder="Vật tư..."
+                  value={gatePass.assetDescription}
+                  onChange={(e) => {
+                    dispatch(
+                      updateGatePassField({
+                        field: "assetDescription",
+                        value: e.target.value,
+                      })
+                    );
+                  }}
+                />
+              )}
             </Col>
           </WrapperContainerText>
           <WrapperContainerText>

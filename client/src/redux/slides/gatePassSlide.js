@@ -13,9 +13,9 @@ const initialState = {
     time: ''
   },
   reason: '',
-  assetOut: false,
+  assetOut: true,
   assetDescription: '',
-  assetImage: null, // Hoặc tham chiếu đến hình ảnh đã chọn
+  assetImage: null,
   approval: '',
   status: 'Chờ xử lý',
 };
