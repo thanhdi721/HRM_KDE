@@ -107,9 +107,7 @@ const HomePage = () => {
       });
   };
   dayjs.extend(customParseFormat);
-  const onChange = (time, timeString) => {
-    console.log(time, timeString);
-  };
+ 
 
   const minuteOptions = [];
   for (let i = 5; i <= 60; i += 5) {
@@ -145,7 +143,11 @@ const HomePage = () => {
             <Col span={8}>Từ:</Col>
             <Col span={8}>
               <span>Thời gian: </span>
-              <TimePicker format="HH:mm" onChange={onChange} />
+              <TimePicker
+                format="HH:mm"
+                onChange={handleFromTimeChange}
+                value={gatePass.from.time}
+              />
               {/* <SetTime
                 onChange={handleFromTimeChange}
                 value={gatePass.from.time}
@@ -165,7 +167,11 @@ const HomePage = () => {
             <Col span={8}>
               <span>Thời gian: </span>
               {/* <SetTime onChange={handleToTimeChange} value={gatePass.to.time} /> */}
-              <TimePicker format="HH:mm" onChange={onChange} />
+              <TimePicker
+                format="HH:mm"
+                onChange={handleToTimeChange}
+                value={gatePass.to.time}
+              />
             </Col>
             <Col span={8}>
               <span>Ngày: </span>

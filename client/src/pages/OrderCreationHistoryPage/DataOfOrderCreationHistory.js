@@ -22,8 +22,8 @@ const DataOfOrderCreationHistory = () => {
               <td>12/2/2222 12:00</td>
               <td>12/2/2222 12:00</td>
               <td>12/2/2222 12:00</td>
-              <td>Đi đẻ :v</td>
-              <td>Chờ Khứa xác nhận</td>
+              <td>Đi chơi</td>
+              <td>Chờ xác nhận</td>
               <td>12/2/2222 12:00</td>
               <td>12/2/2222 12:00</td>
               <td className="d-flex justify-content-between">
