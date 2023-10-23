@@ -1,57 +1,59 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const slug = require('mongoose-slug-generator');
+const slug = require("mongoose-slug-generator");
 
 mongoose.plugin(slug);
 
-const gatePassSchema = new Schema({
+const gatePassSchema = new Schema(
+  {
     fullName: {
-        type: String,
+      type: String,
     },
     msnv: {
-        type: String,
+      type: String,
     },
     office: {
-        type: String,
+      type: String,
     },
     from: {
-        date: { type: Date },
-        time: { type: String }
+      date: { type: Date },
+      time: { type: String },
     },
     to: {
-        date: { type: Date},
-        time: { type: String }
+      date: { type: Date },
+      time: { type: String },
     },
     reason: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     assetOut: {
-        type: Boolean,
-        required: true
+      type: Boolean,
+      required: true,
     },
     assetDescription: {
-        type: String
+      type: String,
     },
     assetImage: {
-        type: String 
+      type: String,
     },
     approval: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     status: {
-        type: String,
-        default: "Chờ xử lý"
+      type: String,
+      default: "Chờ xử lý",
     },
-},
-{
+  },
+  {
     timestamps: true,
-    toJSON: { virtuals: true } // Cho phép sử dụng virtual trong khi chuyển đổi thành JSON
-});
+    toJSON: { virtuals: true }, // Cho phép sử dụng virtual trong khi chuyển đổi thành JSON
+  },
+);
 // Định nghĩa trường ảo 'ngayTao' để format ngày
-gatePassSchema.virtual('ngayTao').get(function() {
-    return this.createdAt.toISOString().split('  ')[0];
-});
+// gatePassSchema.virtual('ngayTao').get(function() {
+//     return this.createdAt.toISOString().split('  ')[0];
+// });
 
-module.exports = mongoose.model('GatePass', gatePassSchema);
+module.exports = mongoose.model("GatePass", gatePassSchema);
