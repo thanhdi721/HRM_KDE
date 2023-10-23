@@ -1,5 +1,4 @@
 const GatePass = require('../models/GatePassModel');
-const getApprovalConfig = require('./ApprovalController');
 
 const createGatePass = async (req, res) => {
     try {
