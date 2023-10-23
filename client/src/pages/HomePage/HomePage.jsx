@@ -266,6 +266,8 @@ const HomePage = () => {
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>Hình ảnh tài sản:</Col>
+            {isAssetSelected && (
+            <>
             <Col span={8}>
               <input type="file" onChange={handlePreviewImage} />
             </Col>
@@ -274,6 +276,8 @@ const HomePage = () => {
                 <img src={gatePass.assetImage} alt="" width="100%" />
               )}
             </Col>
+            </>
+            )}
           </WrapperContainerText>
           <WrapperContainerText>
             <Col span={8}>CBQL duyệt:</Col>
