@@ -7,24 +7,20 @@ mongoose.plugin(slug);
 const gatePassSchema = new Schema({
     fullName: {
         type: String,
-        required: true
     },
     msnv: {
         type: String,
-        required: true,
-        unique: true
     },
     office: {
         type: String,
-        required: true
     },
     from: {
-        date: { type: Date, required: true },
-        time: { type: String, required: true }
+        date: { type: Date },
+        time: { type: String }
     },
     to: {
-        date: { type: Date, required: true },
-        time: { type: String, required: true }
+        date: { type: Date},
+        time: { type: String }
     },
     reason: {
         type: String,
