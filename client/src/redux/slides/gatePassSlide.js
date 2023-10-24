@@ -18,6 +18,8 @@ const initialState = {
   assetImage: null,
   approval: '',
   status: 'Chờ xử lý',
+  loading: false,
+  error: null
 };
 
 export const gatePassSlice = createSlice({
@@ -42,7 +44,14 @@ export const gatePassSlice = createSlice({
     },
     resetGatePass: (state) => {
       return initialState;
-    }
+    },
+    createGatePassSuccess: (state, action) => {
+      state.loading = false;
+    },
+    createGatePassError: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
   },
 });
 
@@ -52,7 +61,9 @@ export const {
   updateFromTime,
   updateToDate,
   updateToTime,
-  resetGatePass,  
+  resetGatePass,
+  createGatePassSuccess,
+  createGatePassError
 } = gatePassSlice.actions;
 
 export default gatePassSlice.reducer;
