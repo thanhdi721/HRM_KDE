@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Col, DatePicker, Radio, Select, TimePicker } from "antd";
+import { CameraOutlined } from '@ant-design/icons';
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
@@ -36,6 +37,8 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const [image, setImage] = useState();
   const [isAssetSelected, setIsAssetSelected] = useState(false);
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const videoRef = useRef(null);
 
   useEffect(() => {
     if (user.fullName) {
@@ -65,6 +68,41 @@ const HomePage = () => {
   const handleFromDateChange = (date) => {
     // Cập nhật trường ngày trong state gatePass khi người dùng chọn từ ngày
     dispatch(updateFromDate(date));
+  };
+
+  useEffect(() => {
+    if (isCameraActive) {
+      startCamera();
+    }
+  }, [isCameraActive]);
+
+  const startCamera = async () => {
+    const constraints = {
+      video: {
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    };
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia(constraints);
+      videoRef.current.srcObject = stream;
+    } catch (error) {
+      console.error("Error accessing camera:", error);
+    }
+  };
+
+  const captureImage = (e) => {
+    e.preventDefault();
+    const videoElement = videoRef.current;
+    const canvas = document.createElement("canvas");
+    canvas.width = videoElement.videoWidth;
+    canvas.height = videoElement.videoHeight;
+    const context = canvas.getContext("2d");
+    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+    const imageUrl = canvas.toDataURL();
+
+    // Cập nhật giá trị assetImage trong gatePass với ảnh đã chụp
+    dispatch(updateGatePassField({ field: "assetImage", value: imageUrl }));
   };
 
   const handleFromTimeChange = (time) => {
@@ -97,7 +135,6 @@ const HomePage = () => {
   };
 
   const handleRadioChange = (e) => {
-    console.log(isAssetSelected);
     setIsAssetSelected(e.target.value === "1");
   };
 
@@ -128,7 +165,7 @@ const HomePage = () => {
 
   
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <WrapperBody>
         <WrapperContainer>
           <WrapperContainerTitle>Tạo đơn ra cổng</WrapperContainerTitle>
@@ -268,17 +305,35 @@ const HomePage = () => {
             <Col span={8}>Hình ảnh tài sản:</Col>
             {isAssetSelected && (
             <>
-            <Col span={8}>
-              <input type="file" onChange={handlePreviewImage} />
-            </Col>
-            <Col span={8} style={{ margin: "5px" }}>
-              {gatePass.assetImage && (
-                <img src={gatePass.assetImage} alt="" width="100%" />
-              )}
-            </Col>
+            {isCameraActive && (
+              <>
+                <Col span={8}>
+                  <video ref={videoRef} style={{ width: "100%", borderRadius:'5px' }} />
+                  <button onClick={captureImage} style={{borderRadius:'5px'}}>Chụp ảnh</button>
+                </Col>
+              </>
+            )}
+            {!isCameraActive && (
+                  <div>
+                    <button style={{borderRadius:'5px', border:'1px solid transparent'}} onClick={() => setIsCameraActive(true)}><CameraOutlined style={{fontSize:'22px'}}/></button>
+                  </div>
+            )}
             </>
             )}
+            {isAssetSelected && (
+              <>
+                <Col span={8}>
+                  <input type="file" onChange={handlePreviewImage} />
+                </Col>
+                <Col span={8} style={{ margin: "5px" }}>
+                  {gatePass.assetImage && (
+                    <img src={gatePass.assetImage} alt="" width="50%" />
+                  )}
+                </Col>
+              </>
+            )}
           </WrapperContainerText>
+
           <WrapperContainerText>
             <Col span={8}>CBQL duyệt:</Col>
             <Col span={8}>
