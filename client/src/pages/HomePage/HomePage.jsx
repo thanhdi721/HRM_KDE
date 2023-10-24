@@ -60,22 +60,17 @@ const HomePage = () => {
     }
   }, [user.fullName, user.msnv, user.office, dispatch]);
 
-  useEffect(() => {
-    return () => {
-      image && URL.revokeObjectURL(image.preview);
-    };
-  }, [image]);
   const handleFromDateChange = (date) => {
     // Cập nhật trường ngày trong state gatePass khi người dùng chọn từ ngày
     dispatch(updateFromDate(date));
   };
-
+  
   useEffect(() => {
     if (isCameraActive) {
       startCamera();
     }
   }, [isCameraActive]);
-
+  
   const startCamera = async () => {
     const constraints = {
       video: {
@@ -90,7 +85,7 @@ const HomePage = () => {
       console.error("Error accessing camera:", error);
     }
   };
-
+  
   const captureImage = (e) => {
     e.preventDefault();
     const videoElement = videoRef.current;
@@ -100,44 +95,56 @@ const HomePage = () => {
     const context = canvas.getContext("2d");
     context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
     const imageUrl = canvas.toDataURL();
-
+  
     // Cập nhật giá trị assetImage trong gatePass với ảnh đã chụp
     dispatch(updateGatePassField({ field: "assetImage", value: imageUrl }));
+    
+    // Lưu ảnh vào localStorage
+    if (imageUrl) {
+      localStorage.setItem("assetImage", imageUrl);
+    }
   };
-
+  
+  
   const handleFromTimeChange = (time) => {
     // Cập nhật trường giờ trong state gatePass khi người dùng chọn từ giờ
     dispatch(updateFromTime(time));
   };
-
+  
   const handleToDateChange = (date) => {
     // Cập nhật trường ngày trong state gatePass khi người dùng chọn đến ngày
     dispatch(updateToDate(date));
   };
-
+  
   const handleToTimeChange = (time) => {
     // Cập nhật trường giờ trong state gatePass khi người dùng chọn đến giờ
     dispatch(updateToTime(time));
   };
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   // Cập nhật từng trường trong reducer khi người dùng nhập
-  //   dispatch(updateGatePassField({ field: name, value }));
-  // };
-
+  
   const handlePreviewImage = (e) => {
     const file = e.target.files[0];
     file.preview = URL.createObjectURL(file);
     // Cập nhật giá trị assetImage trong gatePass
     dispatch(updateGatePassField({ field: "assetImage", value: file.preview }));
+    
+    // Lưu ảnh vào localStorage
+    if (file.preview) {
+      localStorage.setItem("assetImage", file.preview);
+    }
+    
     setImage(file);
   };
-
+  
+  useEffect(() => {
+    return () => {
+      image && URL.revokeObjectURL(image.preview);
+    };
+  }, [image]);
+  
   const handleRadioChange = (e) => {
     setIsAssetSelected(e.target.value === "1");
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     const assetOutBoolean = isAssetSelected;
@@ -156,7 +163,6 @@ const HomePage = () => {
       });
   };
   dayjs.extend(customParseFormat);
- 
 
   const minuteOptions = [];
   for (let i = 5; i <= 60; i += 5) {
