@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 
 function HR () {
-//tổng giờ làm của nhân viên
+//tổng giờ làm của nhân viên  
     const [startTime, setStartTime] = useState ('08:00');
     const [endTime, setEndTime] = useState ('17:00'); 
     const [totalWorkHours, setTotalWorkHours] = useState (0);
