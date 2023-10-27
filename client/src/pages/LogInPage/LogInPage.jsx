@@ -1,48 +1,47 @@
 import { useNavigate } from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import {
   WrapperContainerLeft,
   WrapperContainerRight,
   WrapperTextLight,
 } from "./style";
+import { EyeInvisibleOutlined, EyeOutlined } from "@ant-design/icons";
 import Loading from "../../components/LoadingComponent/Loading";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import imageLogo from "../../assets/images/logo.png";
 import { Image } from "antd";
-import * as UserService from '../../services/UserService';
+import * as UserService from "../../services/UserService";
 import { useMutationHooks } from "../../hooks/useMutationHooks";
 // import * as message from "../../components/Message/Message";
-import jwt_decode from "jwt-decode"
+import jwt_decode from "jwt-decode";
 import { updatelUser } from "../../redux/slides/userSlide";
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const [msnv, setMsnv] = useState("");
   const [password, setPassword] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const mutation = useMutationHooks(
-    data => UserService.loginUser(data)
-  );
-  const { data, isLoading, isSuccess } = mutation
+  const mutation = useMutationHooks((data) => UserService.loginUser(data));
+  const { data, isLoading, isSuccess } = mutation;
   useEffect(() => {
-    if(isSuccess){
-      localStorage.setItem('access_token',JSON.stringify(data?.access_token));
-      if(data?.access_token){
-        const decoded = jwt_decode(data?.access_token)
-        if(decoded?.id){
-          handleGetDetailsUser(decoded?.id, data?.access_token)
+    if (isSuccess) {
+      localStorage.setItem("access_token", JSON.stringify(data?.access_token));
+      if (data?.access_token) {
+        const decoded = jwt_decode(data?.access_token);
+        if (decoded?.id) {
+          handleGetDetailsUser(decoded?.id, data?.access_token);
         }
-        navigate('/infoPage')
+        navigate("/infoPage");
       }
     }
-  },[isSuccess])
+  }, [isSuccess]);
 
-  const handleGetDetailsUser = async(id, token) => {
-    const res = await UserService.getDetailsUser(id,token);
-    dispatch(updatelUser({...res?.data, access_token: token}))
-  }
+  const handleGetDetailsUser = async (id, token) => {
+    const res = await UserService.getDetailsUser(id, token);
+    dispatch(updatelUser({ ...res?.data, access_token: token }));
+  };
 
   // console.log('mutation', mutation);
   const handleLogin = async () => {
@@ -51,7 +50,7 @@ const SignInPage = () => {
       password,
     });
   };
-  
+
   const [isShowPassword, setIsShowPassword] = useState(false);
   return (
     <div
@@ -76,21 +75,23 @@ const SignInPage = () => {
           <h1>Xin chào</h1>
           <p>Đăng nhập vào tạo tài khoản</p>
           <div>
-          <input
-            name={msnv}
-            type="text"
-            value={msnv}
-            onChange={(e) => setMsnv(e.target.value)}
-            style={{
-              border: "none",
-              width: "100%",
-              height: "33px",
-              borderRadius: "4px",
-              marginBottom: "10px",
-            }}
-            placeholder="abc@gmail.com"
-          />
-          {data?.status === 'error' && <span style={{color: 'red'}}>{data?.message}</span>}
+            <input
+              name={msnv}
+              type="text"
+              value={msnv}
+              onChange={(e) => setMsnv(e.target.value)}
+              style={{
+                border: "none",
+                width: "100%",
+                height: "33px",
+                borderRadius: "4px",
+                marginBottom: "10px",
+              }}
+              placeholder="abc@gmail.com"
+            />
+            {data?.status === "error" && (
+              <span style={{ color: "red" }}>{data?.message}</span>
+            )}
           </div>
           <div style={{ position: "relative" }}>
             <span
@@ -115,6 +116,29 @@ const SignInPage = () => {
                 borderRadius: "4px",
               }}
             />
+            {isShowPassword ? (
+              <EyeOutlined
+                style={{
+                  zIndex: 10,
+                  position: "absolute",
+                  top: "4px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              />
+            ) : (
+              <EyeInvisibleOutlined
+                style={{
+                  zIndex: 10,
+                  position: "absolute",
+                  top: "4px",
+                  right: "8px",
+                  cursor: "pointer",
+                }}
+                onClick={() => setIsShowPassword(!isShowPassword)}
+              />
+            )}
           </div>
           <Loading isLoading={isLoading}>
             <ButtonComponent

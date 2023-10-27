@@ -4,7 +4,7 @@ import "./Info.css";
 import { useSelector } from "react-redux";
 
 const Info = () => {
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
 
   return (
     <div className="container mt-4">
@@ -29,20 +29,20 @@ const Info = () => {
                   <td>{user.gender}</td>
                 </tr>
                 <tr>
-                    <td>Bộ phận:</td>
-                    <td>{user.position}</td>
+                  <td>Chức vụ:</td>
+                  <td>{user.position}</td>
                 </tr>
                 <tr>
-                    <td>Phòng ban:</td>
-                    <td>{user.office}</td>
+                  <td>Phòng ban:</td>
+                  <td>{user.office}</td>
                 </tr>
                 <tr>
-                    <td>CBQL trực tiếp:</td>
-                    <td>{user.directManagers}</td>
+                  <td>CBQL trực tiếp:</td>
+                  <td>{user.directManagers}</td>
                 </tr>
                 <tr>
-                    <td>CBQL cấp trên:</td>
-                    <td>{user.superiorManagers}</td>
+                  <td>CBQL cấp trên:</td>
+                  <td>{user.superiorManagers}</td>
                 </tr>
               </tbody>
             </table>
