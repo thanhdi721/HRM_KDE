@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import ButtonComponent from "../ButtonComponent/ButtonComponent";
 
 const ModalComponent = () => {
   const [open, setOpen] = useState(false);
@@ -24,12 +23,10 @@ const ModalComponent = () => {
     setOpen(false);
   };
   return (
-    <div>
-      <ButtonComponent
-        onClick={showModal}
-        textbutton={"Xóa"}
-        className="btn btn-danger"
-      />
+    <>
+      <button className="btn btn-danger" onClick={showModal}>
+        Xóa
+      </button>
       <Modal
         title="Bạn có chắc là muốn tiếp tục chứ chứ ?"
         open={open}
@@ -39,7 +36,7 @@ const ModalComponent = () => {
       >
         <p>{modalText}</p>
       </Modal>
-    </div>
+    </>
   );
 };
 

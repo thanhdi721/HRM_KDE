@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Col, DatePicker, Radio, Select, TimePicker } from "antd";
-import { CameraOutlined } from '@ant-design/icons';
+import { CameraOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import {
@@ -12,7 +12,6 @@ import {
 
 import TextArea from "antd/es/input/TextArea.js";
 // import UploadButton from "./UploadButton.js";
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent.jsx";
 
 import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent.jsx";
 
@@ -80,8 +79,8 @@ const HomePage = () => {
     const constraints = {
       video: {
         width: { ideal: 1280 },
-        height: { ideal: 720 }
-      }
+        height: { ideal: 720 },
+      },
     };
     try {
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -141,7 +140,9 @@ const HomePage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const assetOutBoolean = isAssetSelected;
-    dispatch(updateGatePassField({ field: "assetOut", value: assetOutBoolean }));
+    dispatch(
+      updateGatePassField({ field: "assetOut", value: assetOutBoolean }),
+    );
 
     if (!isAssetSelected) {
       dispatch(updateGatePassField({ field: "assetDescription", value: "" }));
@@ -156,14 +157,12 @@ const HomePage = () => {
       });
   };
   dayjs.extend(customParseFormat);
- 
 
   const minuteOptions = [];
   for (let i = 5; i <= 60; i += 5) {
     minuteOptions.push(i);
   }
 
-  
   return (
     <form>
       <WrapperBody>
@@ -273,15 +272,15 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}>Có đem vật tư:</Col>
             <Col span={8}>
-            <Radio.Group
-              name="radiogroup"
-              defaultValue={gatePass.assetOut ? "1" : "2"}
-              value={isAssetSelected ? "1" : "2"}
-              onChange={handleRadioChange}
-            >
-              <Radio value="1">Có</Radio>
-              <Radio value="2">Không</Radio>
-            </Radio.Group>
+              <Radio.Group
+                name="radiogroup"
+                defaultValue={gatePass.assetOut ? "1" : "2"}
+                value={isAssetSelected ? "1" : "2"}
+                onChange={handleRadioChange}
+              >
+                <Radio value="1">Có</Radio>
+                <Radio value="2">Không</Radio>
+              </Radio.Group>
             </Col>
             <Col span={8}>
               {isAssetSelected && (
@@ -294,7 +293,7 @@ const HomePage = () => {
                       updateGatePassField({
                         field: "assetDescription",
                         value: e.target.value,
-                      })
+                      }),
                     );
                   }}
                 />
@@ -304,21 +303,37 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}>Hình ảnh tài sản:</Col>
             {isAssetSelected && (
-            <>
-            {isCameraActive && (
               <>
-                <Col span={8}>
-                  <video ref={videoRef} style={{ width: "100%", borderRadius:'5px' }} />
-                  <button onClick={captureImage} style={{borderRadius:'5px'}}>Chụp ảnh</button>
-                </Col>
-              </>
-            )}
-            {!isCameraActive && (
+                {isCameraActive && (
+                  <>
+                    <Col span={8}>
+                      <video
+                        ref={videoRef}
+                        style={{ width: "100%", borderRadius: "5px" }}
+                      />
+                      <button
+                        onClick={captureImage}
+                        style={{ borderRadius: "5px" }}
+                      >
+                        Chụp ảnh
+                      </button>
+                    </Col>
+                  </>
+                )}
+                {!isCameraActive && (
                   <div>
-                    <button style={{borderRadius:'5px', border:'1px solid transparent'}} onClick={() => setIsCameraActive(true)}><CameraOutlined style={{fontSize:'22px'}}/></button>
+                    <button
+                      style={{
+                        borderRadius: "5px",
+                        border: "1px solid transparent",
+                      }}
+                      onClick={() => setIsCameraActive(true)}
+                    >
+                      <CameraOutlined style={{ fontSize: "22px" }} />
+                    </button>
                   </div>
-            )}
-            </>
+                )}
+              </>
             )}
             {isAssetSelected && (
               <>
@@ -367,17 +382,11 @@ const HomePage = () => {
           <WrapperContainerText>
             <Col span={8}></Col>
             <Col span={8}></Col>
-            <Col span={8} style={{ display: "flex" }}>
-              <ModalComponent>
-                <ButtonComponent textbutton={"hủy"} />
-              </ModalComponent>
-
-              <ButtonComponent
-                onClick={handleSubmit}
-                textbutton={"gửi"}
-                className="btn btn-success"
-                style={{ marginLeft: "20px" }}
-              />
+            <Col span={8} style={{ display: "flex", gap: "8px" }}>
+              <ModalComponent></ModalComponent>
+              <button onClick={handleSubmit} className="btn btn-success">
+                Gửi
+              </button>
             </Col>
           </WrapperContainerText>
         </WrapperContainer>
