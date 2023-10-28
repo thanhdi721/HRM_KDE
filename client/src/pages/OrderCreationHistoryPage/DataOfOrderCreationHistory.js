@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent";
 import {
-  deleteGatePass,
   getPendingGatePasses,
 } from "../../services/GatePassService";
 import ModalComponentUpdate from "../../components/ModalComponent/ModalFromUpdateOrder";
+import { useSelector } from "react-redux";
 
-const DataOfOrderCreationHistory = (gatePassId) => {
+const DataOfOrderCreationHistory = () => {
   const [pendingGatePasses, setPendingGatePasses] = useState([]);
   const [gatePassImage, setGatePassImage] = useState("");
+  const gatePass = useSelector((state) => state.gatePass);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,14 +24,6 @@ const DataOfOrderCreationHistory = (gatePassId) => {
     fetchData(); // Gọi hàm để lấy dữ liệu khi component được render
   }, []);
 
-  const handleDelete = async () => {
-    try {
-      const response = await deleteGatePass(gatePassId);
-      console.log(response); // Log kết quả trả về từ API (success hoặc error)
-    } catch (error) {
-      console.error("Error deleting gate pass:", error);
-    }
-  };
   useEffect(() => {
     const storedImageUrl = localStorage.getItem("assetImage");
     if (storedImageUrl) {
@@ -78,8 +72,8 @@ const DataOfOrderCreationHistory = (gatePassId) => {
                   className="d-flex justify-content-between"
                   style={{ gap: "8px" }}
                 >
-                  <ModalComponent onClick={handleDelete}>Xóa</ModalComponent>
-                  <ModalComponentUpdate className="btn btn-primary">
+                  <ModalComponent id={gatePass._id}>Xóa</ModalComponent>
+                  <ModalComponentUpdate id={gatePass._id} className="btn btn-primary">
                     Sửa
                   </ModalComponentUpdate>
                 </td>

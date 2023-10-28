@@ -48,7 +48,6 @@ const gatePassSchema = new Schema(
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true }, // Cho phép sử dụng virtual trong khi chuyển đổi thành JSON
   },
 );
 // Định nghĩa trường ảo 'ngayTao' để format ngày

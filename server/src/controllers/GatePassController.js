@@ -70,9 +70,9 @@ const getGatePassList = async (req, res) => {
 
 const updateGatePass = async (req, res) => {
     try {
-        const { id } = req.params;
+        const id = req.params.id;
         const updateData = req.body;
-
+        console.log('Received ID:', id);
         await GatePass.findByIdAndUpdate(id, updateData);
 
         return res.status(200).json({
@@ -90,21 +90,30 @@ const updateGatePass = async (req, res) => {
 
 const deleteGatePass = async (req, res) => {
     try {
-        const { id } = req.params;
-        await GatePass.findByIdAndDelete(id);
-
-        return res.status(200).json({
-            status: 'success',
-            message: 'Phiếu đã được xóa thành công'
+      const id = req.params.id;
+      console.log('Received ID:', id); // Kiểm tra giá trị id tại đây
+      const result = await GatePass.findByIdAndDelete(id);
+  
+      if (!result) {
+        return res.status(404).json({
+          status: 'error',
+          message: 'Không tìm thấy phiếu cần xóa'
         });
+      }
+  
+      return res.status(200).json({
+        status: 'success',
+        message: 'Phiếu đã được xóa thành công'
+      });
     } catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            status: 'error',
-            message: 'Đã có lỗi xảy ra khi xóa phiếu'
-        });
+      console.error(error);
+      return res.status(500).json({
+        status: 'error',
+        message: 'Đã có lỗi xảy ra khi xóa phiếu'
+      });
     }
-}
+  };
+  
 
 module.exports = {
     createGatePass,

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
+import { deleteGatePass } from "../../services/GatePassService";
 
-const ModalComponent = () => {
+const ModalComponent = ({id}) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState(
@@ -10,16 +11,19 @@ const ModalComponent = () => {
   const showModal = () => {
     setOpen(true);
   };
-  const handleOk = () => {
+  const handleOk = async () => {
     setModalText("Việc làm của bạn sẽ không khôi phục được!!!");
     setConfirmLoading(true);
     setTimeout(() => {
       setOpen(false);
       setConfirmLoading(false);
     }, 2000);
+  
+    const response = await deleteGatePass(id);
+    window.location.reload();
   };
+  
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setOpen(false);
   };
   return (

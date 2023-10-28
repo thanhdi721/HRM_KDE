@@ -17,6 +17,18 @@ const personnelSchema = new Schema({
         type: Boolean,
         default: false
     },
+    isManager: {
+        type: Boolean,
+        default: false
+    },
+    isSecurity:{
+        type: Boolean,
+        default: false
+    },
+    isAttendanceL:{
+        type: Boolean,
+        default: false
+    },
     password: {
         type: String,
         required: true 
