@@ -38,6 +38,8 @@ const HomePage = () => {
   const [isAssetSelected, setIsAssetSelected] = useState(false);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const videoRef = useRef(null);
+  const refreshInterval = 5 * 60 * 1000; // 5 phút
+  let timerId;
 
   useEffect(() => {
     if (user.fullName) {
@@ -139,6 +141,28 @@ const HomePage = () => {
       image && URL.revokeObjectURL(image.preview);
     };
   }, [image]);
+
+  useEffect(() => {
+  
+    timerId = setInterval(() => {
+      refreshBlob(); 
+    }, refreshInterval);
+  
+    return () => {
+      clearInterval(timerId);
+    }
+  }, []);
+
+  const refreshBlob = async () => {
+    // Lấy url blob từ state
+    const blobUrl = gatePass.assetImage;
+  
+    // Thêm tham số để tránh cache
+    const url = `${blobUrl}?id=${Date.now()}`;  
+  
+    // Gọi ajax
+    await fetch(url);
+  }
   
   const handleRadioChange = (e) => {
     setIsAssetSelected(e.target.value === "1");
@@ -162,6 +186,7 @@ const HomePage = () => {
       .catch((error) => {
         console.error("Error creating gate pass:", error);
       });
+      clearInterval(timerId);
   };
   dayjs.extend(customParseFormat);
 
