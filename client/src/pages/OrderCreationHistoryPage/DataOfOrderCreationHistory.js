@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
-// import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent";
-import { deleteGatePass, getPendingGatePasses } from "../../services/GatePassService";
+import ModalComponent from "../../components/ModalComponent/ModalDeleteComponent";
+import {
+  deleteGatePass,
+  getPendingGatePasses,
+} from "../../services/GatePassService";
+import ModalComponentUpdate from "../../components/ModalComponent/ModalFromUpdateOrder";
 
 const DataOfOrderCreationHistory = (gatePassId) => {
   const [pendingGatePasses, setPendingGatePasses] = useState([]);
@@ -63,12 +67,21 @@ const DataOfOrderCreationHistory = (gatePassId) => {
                 <td>{gatePass.to.time}</td>
                 <td>
                   {gatePass.assetImage && (
-                    <img src={gatePass.assetImage} alt="Asset" style={{ width: "50px" }} />
+                    <img
+                      src={gatePass.assetImage}
+                      alt="Asset"
+                      style={{ width: "50px" }}
+                    />
                   )}
                 </td>
-                <td className="d-flex justify-content-between">
-                  <button onClick={handleDelete}>Xóa</button>
-                  <button className="btn btn-primary">Sửa</button>
+                <td
+                  className="d-flex justify-content-between"
+                  style={{ gap: "8px" }}
+                >
+                  <ModalComponent onClick={handleDelete}>Xóa</ModalComponent>
+                  <ModalComponentUpdate className="btn btn-primary">
+                    Sửa
+                  </ModalComponentUpdate>
                 </td>
               </tr>
             ))}
