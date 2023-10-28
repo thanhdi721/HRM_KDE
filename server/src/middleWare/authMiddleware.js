@@ -31,6 +31,7 @@ const authMiddleware = (req, res, next) => {
     });
 }
 
+
 const authUserMiddleware = (req, res, next) => {
   const tokenHeader = req.headers.tokenheader; // Đọc token từ header 'tokenheader'
   console.log('tokenHeader', tokenHeader);
@@ -61,7 +62,18 @@ const authUserMiddleware = (req, res, next) => {
     }
   });
 };
-
+const isManagerMiddleware = (req, res, next) => {
+  // Kiểm tra quyền người quản lý và cho phép hoặc từ chối truy cập
+  // Làm tương tự như isAdminMiddleware
+};
+const isSecurityMiddleware = (req, res, next) => {
+  // Kiểm tra quyền người bảo vệ và cho phép hoặc từ chối truy cập
+  // Làm tương tự như isAdminMiddleware
+};
+const isAttendanceLMiddleware = (req, res, next) => {
+  // Kiểm tra quyền người chấm công và cho phép hoặc từ chối truy cập
+  // Làm tương tự như isAdminMiddleware
+};
   
 
-module.exports = { authMiddleware, authUserMiddleware };
+module.exports = { authMiddleware, authUserMiddleware, isManagerMiddleware, isSecurityMiddleware, isAttendanceLMiddleware};
