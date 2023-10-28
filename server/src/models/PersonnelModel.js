@@ -25,7 +25,7 @@ const personnelSchema = new Schema({
         type: Boolean,
         default: false
     },
-    isAttendanceL:{
+    isAttendance:{
         type: Boolean,
         default: false
     },

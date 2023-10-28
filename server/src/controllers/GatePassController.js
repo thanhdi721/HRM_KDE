@@ -1,4 +1,5 @@
 const GatePass = require('../models/GatePassModel');
+const Personnel = require('../models/PersonnelModel');
 
 const createGatePass = async (req, res) => {
     try {
@@ -113,11 +114,78 @@ const deleteGatePass = async (req, res) => {
       });
     }
   };
-  
+const approveGatePass = async (req, res) => {
 
+    // Kiểm tra quyền
+    const user = req.user;
+    if(!user.isManager) {
+    return res.status(401).json({message: "Bạn không có quyền duyệt đơn"});
+    }
+    const { gatePassId } = req.body;
+    
+    try {
+      // Lấy thông tin đơn cần duyệt
+      const gatePass = await GatePass.findById(gatePassId);
+    
+      // Kiểm tra đơn tồn tại
+      if(!gatePass) return res.status(404).json({message: "Đơn không tồn tại"});
+    
+      // Cập nhật trạng thái duyệt
+      gatePass.status = "Đã duyệt";
+      await gatePass.save();
+    
+      return res.json({message: "Duyệt đơn thành công"});
+    
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+}
+
+const confirmGatePass = async (req, res) => {
+    const { gatePassId } = req.body;
+    
+    try {
+      // Lấy thông tin đơn
+      const gatePass = await GatePass.findById(gatePassId);
+    
+      // Kiểm tra đơn đã được duyệt
+      if(gatePass.status !== "Đã duyệt") 
+        return res.status(400).json({message: "Đơn chưa được duyệt"});
+    
+      // Cập nhật xác nhận
+      gatePass.status = "Đã xác nhận";  
+      await gatePass.save();
+    
+      return res.json({message: "Xác nhận đơn thành công"});
+    
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+}
+
+const attendancePayroll = async (req, res) => {
+
+    try {
+      const personnel = await Personnel.find();
+    
+      personnel.forEach(async staff => {
+        // Tính số ngày công
+        // Tính lương 
+        // Cập nhật dữ liệu
+      });
+    
+      return res.json({message: "Chấm công thành công"});
+    
+    } catch (err) {
+      return res.status(500).json({message: err.message});
+    }
+}
 module.exports = {
     createGatePass,
     getGatePassList,
     updateGatePass,
-    deleteGatePass
+    deleteGatePass,
+    approveGatePass,
+    confirmGatePass,
+    attendancePayroll
 }

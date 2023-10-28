@@ -63,17 +63,38 @@ const authUserMiddleware = (req, res, next) => {
   });
 };
 const isManagerMiddleware = (req, res, next) => {
-  // Kiểm tra quyền người quản lý và cho phép hoặc từ chối truy cập
-  // Làm tương tự như isAdminMiddleware
-};
+  const user = req.user;
+  
+  if(user.isManager) {
+  next();
+  } else {
+  return res.status(401).json({
+  message: 'Bạn không có quyền truy cập'
+  });
+  }
+  }
 const isSecurityMiddleware = (req, res, next) => {
-  // Kiểm tra quyền người bảo vệ và cho phép hoặc từ chối truy cập
-  // Làm tương tự như isAdminMiddleware
+  const user = req.user;
+
+  if(user.isSecurity) {
+  next();
+  } else {
+  return res.status(401).json({
+  message: 'Bạn không có quyền truy cập'
+  });
+  }
 };
-const isAttendanceLMiddleware = (req, res, next) => {
-  // Kiểm tra quyền người chấm công và cho phép hoặc từ chối truy cập
-  // Làm tương tự như isAdminMiddleware
+const isAttendanceMiddleware = (req, res, next) => {
+  const user = req.user;
+
+  if(user.isAttendance) {
+  next();
+  } else {
+  return res.status(401).json({
+  message: 'Bạn không có quyền truy cập'
+  });
+  }
 };
   
 
-module.exports = { authMiddleware, authUserMiddleware, isManagerMiddleware, isSecurityMiddleware, isAttendanceLMiddleware};
+module.exports = { authMiddleware, authUserMiddleware, isManagerMiddleware, isSecurityMiddleware, isAttendanceMiddleware};
