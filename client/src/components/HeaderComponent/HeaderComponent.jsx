@@ -147,12 +147,7 @@ const HeaderComponents = () => {
                       </Link>
                     </li>
 
-                    <li
-                      style={{
-                        paddingTop: "8px",
-                        color: "var(--bs-nav-link-color)",
-                      }}
-                    >
+                    <li>
                       <Space direction="vertical">
                         <Space wrap>
                           <Dropdown
@@ -161,7 +156,7 @@ const HeaderComponents = () => {
                             }}
                             placement="bottomLeft"
                           >
-                            <div>
+                            <div className="nav-link">
                               Chức năng khác
                               <CaretDownOutlined />
                             </div>

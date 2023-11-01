@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderComponents from "../HeaderComponent/HeaderComponents";
+import HeaderComponents from "../HeaderComponent/HeaderComponent";
 
 const DefaultComponents = ({ children }) => {
   return (
