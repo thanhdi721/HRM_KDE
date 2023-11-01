@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Modal } from "antd";
+import { DatePicker, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { updateGatePass } from "../../services/GatePassService";
-import { updateFromDate, updateFromTime, updateGatePassField, updateToDate, updateToTime } from "../../redux/slides/gatePassSlide";
+import {
+  updateFromDate,
+  updateFromTime,
+  updateGatePassField,
+  updateToDate,
+  updateToTime,
+} from "../../redux/slides/gatePassSlide";
 import moment from "moment";
 
-const ModalComponentUpdate = ({id}) => {
+const ModalComponentUpdate = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [modalText, setModalText] = useState(
@@ -34,12 +40,12 @@ const ModalComponentUpdate = ({id}) => {
     // Cập nhật trường giờ trong state gatePass khi người dùng chọn từ giờ
     dispatch(updateFromTime(time));
   };
-  
+
   const handleToDateChange = (date) => {
     // Cập nhật trường ngày trong state gatePass khi người dùng chọn đến ngày
     dispatch(updateToDate(date));
   };
-  
+
   const handleToTimeChange = (time) => {
     // Cập nhật trường giờ trong state gatePass khi người dùng chọn đến giờ
     dispatch(updateToTime(time));
@@ -55,15 +61,15 @@ const ModalComponentUpdate = ({id}) => {
     file.preview = URL.createObjectURL(file);
     // Cập nhật giá trị assetImage trong gatePass
     dispatch(updateGatePassField({ field: "assetImage", value: file.preview }));
-    
+
     // Lưu ảnh vào localStorage
     if (file.preview) {
       localStorage.setItem("assetImage", file.preview);
     }
-    
+
     setImage(file);
   };
-  
+
   useEffect(() => {
     return () => {
       image && URL.revokeObjectURL(image.preview);
@@ -81,8 +87,7 @@ const ModalComponentUpdate = ({id}) => {
     const response = await updateGatePass(id, updatedData);
     window.location.reload();
   };
-  
-  
+
   return (
     <>
       <button className="btn btn-success" onClick={showModal}>
@@ -100,22 +105,24 @@ const ModalComponentUpdate = ({id}) => {
           <form>
             <div className="form-group">
               <label for="exampleInputEmail1">Từ: </label>
-              <input
-                type="date"
+
+              <DatePicker
                 className="form-control"
-                placeholder="Enter email"
+                placeholder="Thời gian từ"
                 onChange={handleFromDateChange}
                 value={gatePass.from.date ? moment(gatePass.from.date) : null}
+                size={"small"}
               />
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Đến: </label>
-              <input
-                type="date"
+
+              <DatePicker
                 className="form-control"
-                placeholder="Password"
+                placeholder="Thời gian Đến"
                 onChange={handleToDateChange}
                 value={gatePass.to.date ? moment(gatePass.to.date) : null}
+                size={"small"}
               />
             </div>
             <div class="form-group">
@@ -144,16 +151,16 @@ const ModalComponentUpdate = ({id}) => {
                 placeholder="Password"
                 onChange={handlePreviewImage}
               />
-                  {gatePass.assetImage && (
-                    <img src={gatePass.assetImage} alt="" width="50%" />
-                  )}
+              {gatePass.assetImage && (
+                <img src={gatePass.assetImage} alt="" width="50%" />
+              )}
             </div>
             <button
               onClick={handleSave}
               className="btn btn-primary"
               style={{ marginTop: "16px" }}
             >
-              Sứa
+              Sửa
             </button>
           </form>
         </div>

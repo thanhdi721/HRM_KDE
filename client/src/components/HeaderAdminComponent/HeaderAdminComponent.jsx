@@ -1,15 +1,15 @@
-import { Col, Dropdown, Image, Popover, Space } from "antd";
-// import React, { useState } from "react";
+import { Col, Popover } from "antd";
+
 import { Link, useNavigate } from "react-router-dom";
 import { WrapperHeader } from "./style";
-import imageLogo from "../../assets/images/logo.png";
+
 import { CaretDownOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import * as UserService from "../../services/UserService";
 import { useDispatch } from "react-redux";
 import { resetUser } from "../../redux/slides/userSlide";
 import { useEffect } from "react";
-const HeaderComponents = () => {
+const HeaderAdminComponent = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -18,34 +18,6 @@ const HeaderComponents = () => {
     dispatch(resetUser());
     navigate("/");
   };
-  //key dropdown menu
-  const items = [
-    {
-      key: "1",
-      label: (
-        <Link rel="noopener noreferrer" to="/employee-manager-page">
-          Quản lý nhân viên
-        </Link>
-      ),
-    },
-    {
-      key: "2",
-      label: (
-        <Link rel="noopener noreferrer" to="/management-protection-page">
-          Bảo vệ quản lý
-        </Link>
-      ),
-    },
-    {
-      key: "3",
-      label: (
-        <Link rel="noopener noreferrer" to="/hrpage">
-          Tính lương nhân viên
-        </Link>
-      ),
-    },
-  ];
-
   useEffect(() => {
     var navbarToggler = document.querySelector(".navbar-toggler");
     var navbarCollapse = document.querySelector(".navbar-collapse");
@@ -56,9 +28,6 @@ const HeaderComponents = () => {
       });
     }
   }, []);
-  const handleNavigateLogo = () => {
-    navigate("/homepage");
-  };
   const handleNavigateLogin = () => {
     navigate("/");
   };
@@ -85,15 +54,7 @@ const HeaderComponents = () => {
       }}
     >
       <WrapperHeader>
-        <Col span={4}>
-          <Image
-            onClick={handleNavigateLogo}
-            src={imageLogo}
-            alt=""
-            style={{ width: "70px", height: "70px" }}
-            preview={false}
-          />
-        </Col>
+        <Col span={4}></Col>
         <Col
           span={14}
           style={{
@@ -124,56 +85,19 @@ const HeaderComponents = () => {
                     style={{ whiteSpace: "nowrap", gap: "16px" }}
                   >
                     <li className="nav-item">
-                      <Link className="nav-link" to="/infopage">
-                        Thông tin cá nhân
+                      <Link className="nav-link" to="/admin-page/add">
+                        Thêm nhân viên
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/homepage">
-                        Tạo đơn ra cổng
+                      <Link className="nav-link" to="/admin-page/edit">
+                        Sửa nhân viên
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link className="nav-link" to="/order-creation-history">
-                        Lịch sử tạo đơn
+                      <Link className="nav-link" to="/admin-page/delete">
+                        Xóa nhân viên
                       </Link>
-                    </li>
-                    {/* <li className="nav-item">
-                      <Link className="nav-link" to="/employee-manager-page">
-                        Quản lý nhân viên
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/management-protection-page">
-                        Bảo vệ quản lý
-                      </Link>
-                    </li>
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/hrpage">
-                        Tính lương nhân viên
-                      </Link>
-                    </li> */}
-                    <li
-                      style={{
-                        paddingTop: "8px",
-                        color: "var(--bs-nav-link-color)",
-                      }}
-                    >
-                      <Space direction="vertical">
-                        <Space wrap>
-                          <Dropdown
-                            menu={{
-                              items,
-                            }}
-                            placement="bottomLeft"
-                          >
-                            <div className="nav-link">
-                              Chức năng khác
-                              <CaretDownOutlined />
-                            </div>
-                          </Dropdown>
-                        </Space>
-                      </Space>
                     </li>
                   </ul>
                 </div>
@@ -215,4 +139,4 @@ const HeaderComponents = () => {
   );
 };
 
-export default HeaderComponents;
+export default HeaderAdminComponent;
