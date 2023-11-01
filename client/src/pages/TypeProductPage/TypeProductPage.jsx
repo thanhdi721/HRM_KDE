@@ -8,7 +8,7 @@ const TypeProductPage = () => {
       }}
     >
       <div style={{ width: "1270px", margin: "0 auto", height: "100%" }}>
-        <h1>page does not exist</h1>
+        <h1>Trang web không tồn tại hoặc bạn không có quyền truy cập</h1>
       </div>
     </div>
   );

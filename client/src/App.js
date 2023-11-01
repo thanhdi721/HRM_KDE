@@ -1,17 +1,20 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes/index";
 import DefaultComponents from "./components/DefaultComponent/DefaultComponent";
 import { isJsonString } from "./ultis";
 import * as UserService from "./services/UserService";
 import jwt_decode from "jwt-decode";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updatelUser } from "./redux/slides/userSlide";
+import Loading from "./components/LoadingComponent/Loading";
 
 function App() {
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.user);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const setupAxiosInterceptors = () => {
       UserService.axiosJWT.interceptors.request.use(
         async (config) => {
@@ -20,9 +23,12 @@ function App() {
           if (decoded?.exp < currentTime.getTime() / 1000) {
             try {
               const data = await UserService.refreshToken();
-              config.headers['Authorization'] = `Bearer ${data?.access_token}`;
+              config.headers["Authorization"] = `Bearer ${data?.access_token}`;
               // Lưu token mới vào localStorage để sử dụng sau này
-              localStorage.setItem('access_token', JSON.stringify(data.access_token));
+              localStorage.setItem(
+                "access_token",
+                JSON.stringify(data.access_token),
+              );
             } catch (error) {
               console.error("Error refreshing token:", error);
               throw error;
@@ -33,12 +39,12 @@ function App() {
         (error) => {
           // Xử lý lỗi request ở đây (nếu cần)
           return Promise.reject(error);
-        }
+        },
       );
     };
 
     const handleDecoded = () => {
-      let storageData = localStorage.getItem('access_token');
+      let storageData = localStorage.getItem("access_token");
       let decoded = {};
       if (storageData && isJsonString(storageData)) {
         storageData = JSON.parse(storageData);
@@ -54,6 +60,7 @@ function App() {
     if (decoded?.id) {
       handleGetDetailsUser(decoded?.id, storageData);
     }
+    setIsLoading(false);
   }, []);
 
   const handleGetDetailsUser = async (id, token) => {
@@ -67,25 +74,28 @@ function App() {
 
   return (
     <div>
-      <Router>
-        <Routes>
-          {routes.map((route) => {
-            const Page = route.page;
-            const Layout = route.IsShowHeader ? DefaultComponents : Fragment;
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}
-        </Routes>
-      </Router>
+      <Loading isLoading={isLoading}>
+        <Router>
+          <Routes>
+            {routes.map((route) => {
+              const Page = route.page;
+              const isCheckAuth = !route.isPrivate || user.isAdmin;
+              const Layout = route.IsShowHeader ? DefaultComponents : Fragment;
+              return (
+                <Route
+                  key={route.path}
+                  path={isCheckAuth ? route.path : null}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
+                />
+              );
+            })}
+          </Routes>
+        </Router>
+      </Loading>
     </div>
   );
 }
