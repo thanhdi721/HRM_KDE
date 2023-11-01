@@ -29,7 +29,6 @@ const DataOfOrderCreationHistory = () => {
     if (storedImageUrl) {
       setGatePassImage(storedImageUrl);
     }
-    console.log(storedImageUrl);
   }, []);
 
   return (

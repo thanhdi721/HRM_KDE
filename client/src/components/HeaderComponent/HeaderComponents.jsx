@@ -102,10 +102,10 @@ const HeaderComponents = () => {
           }}
         >
           <div>
-            <nav class="navbar navbar-expand-lg">
-              <div class="container-fluid">
+            <nav className="navbar navbar-expand-lg">
+              <div className="container-fluid">
                 <button
-                  class="navbar-toggler"
+                  className="navbar-toggler"
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target="#navbarNav"
@@ -114,42 +114,42 @@ const HeaderComponents = () => {
                   aria-label="Toggle navigation"
                 >
                   <span
-                    class="navbar-toggler-icon"
+                    className="navbar-toggler-icon"
                     style={{ width: "20px", height: "20px" }}
                   ></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div className="collapse navbar-collapse" id="navbarNav">
                   <ul
-                    class="navbar-nav"
+                    className="navbar-nav"
                     style={{ whiteSpace: "nowrap", gap: "16px" }}
                   >
-                    <li class="nav-item">
-                      <Link class="nav-link" to="/infopage">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/infopage">
                         Thông tin cá nhân
                       </Link>
                     </li>
-                    <li class="nav-item">
-                      <Link class="nav-link" to="/homepage">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/homepage">
                         Tạo đơn ra cổng
                       </Link>
                     </li>
-                    <li class="nav-item">
-                      <Link class="nav-link" to="/order-creation-history">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/order-creation-history">
                         Lịch sử tạo đơn
                       </Link>
                     </li>
-                    {/* <li class="nav-item">
-                      <Link class="nav-link" to="/employee-manager-page">
+                    {/* <li className="nav-item">
+                      <Link className="nav-link" to="/employee-manager-page">
                         Quản lý nhân viên
                       </Link>
                     </li>
-                    <li class="nav-item">
-                      <Link class="nav-link" to="/management-protection-page">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/management-protection-page">
                         Bảo vệ quản lý
                       </Link>
                     </li>
-                    <li class="nav-item">
-                      <Link class="nav-link" to="/hrpage">
+                    <li className="nav-item">
+                      <Link className="nav-link" to="/hrpage">
                         Tính lương nhân viên
                       </Link>
                     </li> */}
@@ -167,7 +167,7 @@ const HeaderComponents = () => {
                             }}
                             placement="bottomLeft"
                           >
-                            <div class="nav-link">
+                            <div className="nav-link">
                               Chức năng khác
                               <CaretDownOutlined />
                             </div>
