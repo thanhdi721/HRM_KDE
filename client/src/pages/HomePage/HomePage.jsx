@@ -104,6 +104,7 @@ const HomePage = () => {
     if (imageUrl) {
       localStorage.setItem("assetImage", imageUrl);
     }
+    setIsCameraActive(false);
   };
   
   
