@@ -80,11 +80,24 @@ function App() {
             {routes.map((route) => {
               const Page = route.page;
               const isCheckAuth = !route.isPrivate || user.isAdmin;
+              const isCheckAuthSecurity =
+                !route.isPrivateSecurity || user.isSecurity;
+              const isCheckAuthManager =
+                !route.isPrivateManager || user.isManager;
+              const isCheckAuthAttendance =
+                !route.isPrivateAttendance || user.isAttendance;
               const Layout = route.IsShowHeader ? DefaultComponents : Fragment;
               return (
                 <Route
                   key={route.path}
-                  path={isCheckAuth ? route.path : null}
+                  path={
+                    isCheckAuth &&
+                    isCheckAuthManager &&
+                    isCheckAuthSecurity &&
+                    isCheckAuthAttendance
+                      ? route.path
+                      : null
+                  }
                   element={
                     <Layout>
                       <Page />

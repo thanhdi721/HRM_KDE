@@ -23,7 +23,7 @@ const HeaderComponents = () => {
     {
       key: "1",
       label: (
-        <Link rel="noopener noreferrer" to="/admin-page/add">
+        <Link rel="noopener noreferrer" to="/admin-page-add">
           Admin quản lý
         </Link>
       ),
