@@ -66,6 +66,7 @@ export const routes = [
     path: "/hrpage",
     page: HRPage,
     IsShowHeader: true,
+    isPrivateAttendance: true,
   },
   {
     path: "/order-creation-history",
@@ -76,15 +77,17 @@ export const routes = [
     path: "/employee-manager-page",
     page: EmployeeManagerPage,
     IsShowHeader: true,
+    isPrivateSecurity: true,
   },
   {
     path: "/management-protection-page",
     page: ManagementProtectionPage,
     IsShowHeader: true,
+    isPrivateManager: true,
   },
 
   {
-    path: "/admin-page/add",
+    path: "/admin-page-add",
     page: AdminPage,
     isPrivate: true,
   },

@@ -12,6 +12,9 @@ const initialState = {
   superiorManagers: "",
   workHours: "",
   isAdmin: false,
+  isSecurity: false,
+  isManager: false,
+  isAttendance: false,
 };
 
 export const userSlide = createSlice({
@@ -31,6 +34,9 @@ export const userSlide = createSlice({
         superiorManagers,
         workHours,
         isAdmin,
+        isSecurity,
+        isManager,
+        isAttendance,
       } = action.payload;
       state.access_token = access_token;
       state.msnv = msnv;
@@ -43,6 +49,9 @@ export const userSlide = createSlice({
       state.superiorManagers = superiorManagers;
       state.workHours = workHours;
       state.isAdmin = isAdmin ? isAdmin : state.isAdmin;
+      state.isSecurity = isSecurity ? isSecurity : state.isSecurity;
+      state.isManager = isManager ? isManager : state.isManager;
+      state.isAttendance = isAttendance ? isAttendance : state.isAttendance;
     },
     resetUser: (state) => {
       state.access_token = "";
@@ -56,6 +65,9 @@ export const userSlide = createSlice({
       state.superiorManagers = "";
       state.workHours = "";
       state.isAdmin = false;
+      state.isSecurity = false;
+      state.isManager = false;
+      state.isAttendance = false;
     },
   },
 });
