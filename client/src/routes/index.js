@@ -6,12 +6,9 @@ import TypeProductPage from "../pages/TypeProductPage/TypeProductPage";
 import LogInPage from "../pages/LogInPage/LogInPage";
 import RegisterPage from "../pages/RegisterPage/RegisterPage";
 import ProductDetailsPage from "../pages/ProductDetailsPage/ProductDetailsPage";
-
 import InfoPage from "../pages/InfoPage/InfoPage";
-import AdminPageDelete from "../pages/AdminPage/Admin_DeleteStaff/Admin_DeleteStaff";
 import HRPage from "../pages/HRPage/HRPage";
-import AdminPage from "../pages/AdminPage/Admin_MoreStaff/Admin_MoreStaff_Page";
-import AdminPageEdit from "../pages/AdminPage/Admin_EditStaff/Admin_EditStaff_Page";
+import AdminPage from "../pages/AdminPage/AdminPage";
 import OrderCreationHistoryPage from "../pages/OrderCreationHistoryPage/OrderCreationHistoryPage";
 import EmployeeManagerPage from "../pages/EmployeeManagerPage/EmployeeManagerPage";
 import ManagementProtectionPage from "../pages/ManagementProtectionPage/ManagementProtectionPage";
@@ -87,19 +84,10 @@ export const routes = [
   },
 
   {
-    path: "/admin-page-add",
+    path: "/admin-page",
     page: AdminPage,
     isPrivate: true,
-  },
-  {
-    path: "/admin-page/edit",
-    page: AdminPageEdit,
-    isPrivate: true,
-  },
-  {
-    path: "/admin-page/delete",
-    page: AdminPageDelete,
-    isPrivate: true,
+    IsShowHeader: true,
   },
 ];
 export default routes;
