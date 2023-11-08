@@ -1,0 +1,212 @@
+import React, { useEffect, useState } from "react";
+import { WrapperHeader } from "./style";
+import { Button, Form, Modal, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import TableComponent from "../TableComponent/TableComponent";
+import InputComponent from "../InputComponent/InputComponent";
+import * as UserService from "../../services/UserService";
+import { useMutationHooks } from "../../hooks/useMutationHooks";
+import Loading from "../LoadingComponent/Loading";
+import * as Message from "../../components/Message/Message";
+import { useQueries, useQuery } from "@tanstack/react-query";
+const AdminUser = () => {
+  const [stateUser, setStateUser] = useState({
+    msnv: "",
+    fullName: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+  });
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const mutation = useMutationHooks((data) => {
+    const { msnv, fullName, password, confirmPassword, gender } = data;
+    const res = UserService.register({
+      msnv,
+      fullName,
+      password,
+      confirmPassword,
+      gender,
+    });
+    return res;
+  });
+  const getAllUser = async () => {
+    const res = await UserService.getAllUser();
+    console.log("res", res);
+  };
+  const { isLoading: isLoadingUsers, data: users } = useQuery({
+    queryKey: ["users"],
+    queryFn: getAllUser,
+  });
+
+  const onFinish = () => {
+    mutation.mutate(stateUser);
+    console.log("finish", stateUser);
+  };
+  const { data, isLoading, isSuccess } = mutation;
+  useEffect(() => {
+    if (isSuccess && data?.status === "success") {
+      Message.success();
+      handleCancel();
+    } else if (data?.status === "error") {
+      Message.error();
+    }
+  }, [isSuccess]);
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+    setStateUser({
+      msnv: "",
+      fullName: "",
+      password: "",
+      confirmPassword: "",
+      gender: "",
+    });
+  };
+  const handleOnchange = (e) => {
+    setStateUser({
+      ...stateUser,
+      [e.target.name]: e.target.value,
+    });
+  };
+  return (
+    <div>
+      <WrapperHeader>quản lí người dùng</WrapperHeader>
+      <div style={{ marginTop: "20px" }}>
+        <Button
+          style={{
+            width: "150px",
+            height: "150px ",
+            borderRadius: "6px",
+            borderStyle: "dashed",
+          }}
+          onClick={() => setIsModalOpen(true)}
+        >
+          <PlusOutlined style={{ fontSize: "60px" }} />
+        </Button>
+      </div>
+      <div style={{ marginTop: "20px" }}>
+        <TableComponent />
+      </div>
+      <Modal
+        title="thêm nhân viên"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer=""
+      >
+        <Loading isLoading={isLoading}>
+          <Form
+            name="basic"
+            labelCol={{
+              span: 6,
+            }}
+            wrapperCol={{
+              span: 18,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            onFinish={onFinish}
+            autoComplete="on"
+          >
+            <Form.Item
+              label="msnv"
+              name="msnv"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your msnv!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.msnv}
+                onChange={handleOnchange}
+                name="msnv"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Họ và Tên"
+              name="fullName"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your fullName!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.fullName}
+                onChange={handleOnchange}
+                name="fullName"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Mật Khẩu"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.password}
+                onChange={handleOnchange}
+                name="password"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Nhập lại mật khẩu"
+              name="confirmPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your confirmPassword!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.confirmPassword}
+                onChange={handleOnchange}
+                name="confirmPassword"
+              />
+            </Form.Item>
+            <Form.Item
+              label="giới tính"
+              name="gender"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your gender!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.gender}
+                onChange={handleOnchange}
+                name="gender"
+              />
+            </Form.Item>
+
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Loading>
+      </Modal>
+    </div>
+  );
+};
+
+export default AdminUser;

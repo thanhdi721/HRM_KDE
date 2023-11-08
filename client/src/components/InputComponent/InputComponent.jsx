@@ -1,9 +1,32 @@
-import { Input } from "antd";
 import React from "react";
+import { Input } from "antd";
 
-const InputComponent = ({ size, placeholder, bordered, style, ...rests }) => {
+const InputComponent = ({
+  name,
+  value,
+  onChange,
+  size,
+  placeholder,
+  bordered,
+  style,
+  ...rests
+}) => {
+  const handleChange = (e) => {
+    if (onChange) {
+      onChange({
+        target: {
+          name: name,
+          value: e.target.value,
+        },
+      });
+    }
+  };
+
   return (
     <Input
+      name={name}
+      value={value}
+      onChange={handleChange}
       size={size}
       placeholder={placeholder}
       bordered={bordered}
