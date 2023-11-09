@@ -8,8 +8,39 @@ import * as UserService from "../../services/UserService";
 import { useMutationHooks } from "../../hooks/useMutationHooks";
 import Loading from "../LoadingComponent/Loading";
 import * as Message from "../../components/Message/Message";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import DrawerComponent from "../DrawerComponent/DrawerComponent";
+
 const AdminUser = () => {
+  const fetchGetDetailsUser = async () => {
+    const res = await UserService.getDetailsUsers(rowSelected);
+    console.log("res", res);
+  };
+
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+  const [rowSelected, setRowSelected] = useState("");
+  const handleDetailsUser = () => {
+    if (rowSelected) {
+      fetchGetDetailsUser();
+    }
+    setIsOpenDrawer(true);
+    console.log("rowSelected", rowSelected);
+  };
+  const renderAction = () => {
+    return (
+      <div>
+        <DeleteOutlined
+          style={{ fontSize: "30px", color: "red", cursor: "pointer" }}
+        />
+        <EditOutlined
+          style={{ fontSize: "30px", color: "orange", cursor: "pointer" }}
+          onClick={handleDetailsUser}
+        />
+      </div>
+    );
+  };
+
   const [stateUser, setStateUser] = useState({
     msnv: "",
     fullName: "",
@@ -33,12 +64,46 @@ const AdminUser = () => {
   });
   const getAllUser = async () => {
     const res = await UserService.getAllUser();
-    console.log("res", res);
+    return res;
   };
   const { isLoading: isLoadingUsers, data: users } = useQuery({
     queryKey: ["users"],
     queryFn: getAllUser,
   });
+
+  const dataTable =
+    users?.data?.length &&
+    users?.data?.map((user) => {
+      return { ...user, key: user._id };
+    });
+  const columns = [
+    {
+      title: "msnv",
+      dataIndex: "msnv",
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: "fullName",
+      dataIndex: "fullName",
+    },
+    {
+      title: "position",
+      dataIndex: "position",
+    },
+    {
+      title: "department",
+      dataIndex: "department",
+    },
+    {
+      title: "workHours",
+      dataIndex: "workHours",
+    },
+    {
+      title: "Action",
+      dataIndex: "Action",
+      render: renderAction,
+    },
+  ];
 
   const onFinish = () => {
     mutation.mutate(stateUser);
@@ -87,7 +152,18 @@ const AdminUser = () => {
         </Button>
       </div>
       <div style={{ marginTop: "20px" }}>
-        <TableComponent />
+        <TableComponent
+          columns={columns}
+          isLoading={isLoadingUsers}
+          data={dataTable}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                setRowSelected(record._id);
+              },
+            };
+          }}
+        />
       </div>
       <Modal
         title="thêm nhân viên"
@@ -205,6 +281,122 @@ const AdminUser = () => {
           </Form>
         </Loading>
       </Modal>
+      <DrawerComponent
+        title="Sửa thông tin"
+        isOpen={isOpenDrawer}
+        onClose={() => setIsOpenDrawer(false)}
+        width="90%"
+      >
+        <Loading isLoading={isLoading}>
+          <Form
+            name="basic"
+            labelCol={{
+              span: 6,
+            }}
+            wrapperCol={{
+              span: 18,
+            }}
+            style={{
+              maxWidth: 600,
+            }}
+            onFinish={onFinish}
+            autoComplete="on"
+          >
+            <Form.Item
+              label="msnv"
+              name="msnv"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your msnv!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.msnv}
+                onChange={handleOnchange}
+                name="msnv"
+              />
+            </Form.Item>
+
+            <Form.Item
+              label="Họ và Tên"
+              name="fullName"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your fullName!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.fullName}
+                onChange={handleOnchange}
+                name="fullName"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Mật Khẩu"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.password}
+                onChange={handleOnchange}
+                name="password"
+              />
+            </Form.Item>
+            <Form.Item
+              label="Nhập lại mật khẩu"
+              name="confirmPassword"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your confirmPassword!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.confirmPassword}
+                onChange={handleOnchange}
+                name="confirmPassword"
+              />
+            </Form.Item>
+            <Form.Item
+              label="giới tính"
+              name="gender"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your gender!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.gender}
+                onChange={handleOnchange}
+                name="gender"
+              />
+            </Form.Item>
+
+            <Form.Item
+              wrapperCol={{
+                offset: 8,
+                span: 16,
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
+        </Loading>
+      </DrawerComponent>
     </div>
   );
 };
