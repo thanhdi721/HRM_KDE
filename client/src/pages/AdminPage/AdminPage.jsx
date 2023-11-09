@@ -43,7 +43,6 @@ const AdminPage1 = () => {
         style={{
           width: "256px",
           boxShadow: "1px 1px 2px #ccc",
-          height: "100vh",
         }}
         items={items}
       />
