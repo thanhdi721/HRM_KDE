@@ -18,6 +18,11 @@ router.get(
   authUserMiddleware,
   userController.getDetailsUser,
 );
+router.get(
+  "/admin-get-details/:id",
+
+  userController.getDetailsUser,
+);
 router.post("/refresh-token", userController.refreshToken);
 
 module.exports = router;

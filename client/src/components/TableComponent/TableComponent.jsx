@@ -35,6 +35,7 @@ const TableComponent = (props) => {
           }}
           columns={columns}
           dataSource={data}
+          scroll={{ x: true }}
           {...props}
         />
       </div>
