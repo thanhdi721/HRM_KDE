@@ -14,7 +14,7 @@ import DrawerComponent from "../DrawerComponent/DrawerComponent";
 
 const AdminUser = () => {
   const fetchGetDetailsUser = async () => {
-    const res = await UserService.getDetailsUsers(rowSelected);
+    const res = await UserService.adminGetDetailsUsers(rowSelected);
     console.log("res", res);
   };
 
@@ -47,18 +47,50 @@ const AdminUser = () => {
     password: "",
     confirmPassword: "",
     gender: "",
+    directManagers: "",
+    superiorManagers: "",
+    isAttendance: "",
+    isManager: "",
+    isSecurity: "",
   });
-
+  const [stateUserDetails, setStateUserDetails] = useState({
+    msnv: "",
+    fullName: "",
+    password: "",
+    confirmPassword: "",
+    gender: "",
+    directManagers: "",
+    superiorManagers: "",
+    isAttendance: "",
+    isManager: "",
+    isSecurity: "",
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const mutation = useMutationHooks((data) => {
-    const { msnv, fullName, password, confirmPassword, gender } = data;
+    const {
+      msnv,
+      fullName,
+      password,
+      confirmPassword,
+      gender,
+      directManagers,
+      superiorManagers,
+      isAttendance,
+      isManager,
+      isSecurity,
+    } = data;
     const res = UserService.register({
       msnv,
       fullName,
       password,
       confirmPassword,
       gender,
+      directManagers,
+      superiorManagers,
+      isAttendance,
+      isManager,
+      isSecurity,
     });
     return res;
   });
@@ -98,6 +130,26 @@ const AdminUser = () => {
       title: "workHours",
       dataIndex: "workHours",
     },
+    {
+      title: "directManagers",
+      dataIndex: "directManagers",
+    },
+    {
+      title: "superiorManagers",
+      dataIndex: "superiorManagers",
+    },
+    // {
+    //   title: "isAttendance",
+    //   dataIndex: "isAttendance",
+    // },
+    // {
+    //   title: "isManager",
+    //   dataIndex: "isManager",
+    // },
+    // {
+    //   title: "isSecurity",
+    //   dataIndex: "isSecurity",
+    // },
     {
       title: "Action",
       dataIndex: "Action",
@@ -336,35 +388,35 @@ const AdminUser = () => {
               />
             </Form.Item>
             <Form.Item
-              label="Mật Khẩu"
-              name="password"
+              label="directManagers"
+              name="directManagers"
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: "Please input your directManagers!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUser.password}
+                value={stateUser.directManagers}
                 onChange={handleOnchange}
-                name="password"
+                name="directManagers"
               />
             </Form.Item>
             <Form.Item
-              label="Nhập lại mật khẩu"
-              name="confirmPassword"
+              label="superiorManagers"
+              name="superiorManagers"
               rules={[
                 {
                   required: true,
-                  message: "Please input your confirmPassword!",
+                  message: "Please input your superiorManagers!",
                 },
               ]}
             >
               <InputComponent
-                value={stateUser.confirmPassword}
+                value={stateUser.superiorManagers}
                 onChange={handleOnchange}
-                name="confirmPassword"
+                name="superiorManagers"
               />
             </Form.Item>
             <Form.Item
@@ -383,7 +435,54 @@ const AdminUser = () => {
                 name="gender"
               />
             </Form.Item>
-
+            <Form.Item
+              label="isAttendance"
+              name="isAttendance"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your isAttendance!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.isAttendance}
+                onChange={handleOnchange}
+                name="isAttendance"
+              />
+            </Form.Item>
+            <Form.Item
+              label="isManager"
+              name="isManager"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your gender!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.isManager}
+                onChange={handleOnchange}
+                name="isManager"
+              />
+            </Form.Item>
+            <Form.Item
+              label="isSecurity"
+              name="isSecurity"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your isSecurity!",
+                },
+              ]}
+            >
+              <InputComponent
+                value={stateUser.isSecurity}
+                onChange={handleOnchange}
+                name="isSecurity"
+              />
+            </Form.Item>
             <Form.Item
               wrapperCol={{
                 offset: 8,

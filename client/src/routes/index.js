@@ -74,13 +74,13 @@ export const routes = [
     path: "/employee-manager-page",
     page: EmployeeManagerPage,
     IsShowHeader: true,
-    isPrivateSecurity: true,
+    isPrivateManager: true,
   },
   {
     path: "/management-protection-page",
     page: ManagementProtectionPage,
     IsShowHeader: true,
-    isPrivateManager: true,
+    isPrivateSecurity: true,
   },
 
   {
